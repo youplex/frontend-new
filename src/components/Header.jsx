@@ -1,8 +1,9 @@
 import React from "react";
 import hero from "../assets/hero.png";
 import { HiChevronDown } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 
-function header() {
+function Header() {
   return (
     <>
       <div className="container">
@@ -26,12 +27,12 @@ function header() {
                 timestamps.
               </p>
               <div className="flex justify-center md:justify-start">
-                <a
-                  href=" #"
+                <Link
+                  to={'/login'}
                   className="hidden p-3 px-6 pt-2 text-white bg-btncol rounded-lg baseline hover:bg-btnLight md:block"
                 >
                   Get Started
-                </a>
+                </Link>
               </div>
             </div>
             {/* Image */}
@@ -65,4 +66,4 @@ function header() {
   );
 }
 
-export default header;
+export default Header;

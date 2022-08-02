@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
-import header from "./assets/Login-ui.png"
-import './App.css';
+import header from "../assets/hero.png";
 
 function Login() {
 

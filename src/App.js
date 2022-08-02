@@ -1,21 +1,21 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import Header from './components/Header';
-import Features from './components/Features';
-import AccordionApp from './components/AccordionApp';
 import Footer from './components/Footer';
-
+import { Route, Routes } from 'react-router-dom'
+import Home from './Pages/Home';
+import Login from './Pages/Login';
 
 function App() {
   return (
-    <main>
-      <Navbar />
-      <Header />
-      <Features />
-      <AccordionApp />
-      <Footer />
-    </main>
+   <>
+   <Navbar />
+   <Routes>
+    <Route path='/' element={<Home />} />
+    <Route path='/login' element={<Login />} />
+   </Routes>
+   <Footer /> 
+   </>
   );
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
+import { NavLink, Link } from 'react-router-dom';
 
-function navbar() {
+function Navbar() {
   return (
     <>
       <div className="container">
@@ -27,12 +28,12 @@ function navbar() {
               </a>
             </div>
             {/* Button */}
-            <a
-              href="www.google.com"
+            <NavLink
+              to={'/login'}
               className="hidden p-3 px-6 pt-2 text-white bg-btncol rounded-lg baseline hover:bg-btnLight md:block"
             >
               Get Started
-            </a>
+            </NavLink>
           </div>
         </nav>
       </div>
@@ -40,4 +41,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Navbar;
