@@ -1,5 +1,6 @@
 import React from "react";
-
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+ 
 class AccordionApp extends React.Component {
   render() {
     const title = "Frequently Asked Questions";
@@ -86,7 +87,7 @@ class AccordionItem extends React.Component {
           onClick={this.handleToggleVisibility}
         >
           {this.props.hiddenText.label}
-          <span className={this.state.visibility ? "⬇️" : "⬆️"}></span>
+          <span>{this.state.visibility ? <AiOutlineArrowUp size={22} /> : <AiOutlineArrowDown size={22}/>}</span>
         </button>
         <p className={`accordion__content ${activeStatus}`}>
           {this.props.hiddenText.value}
