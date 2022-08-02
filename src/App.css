@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-btncol {
+  --tw-bg-opacity: 1;
+  background-color: hsl(230 55% 29% / var(--tw-bg-opacity));
+}
+
+.bg-btnLight {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 98% / var(--tw-bg-opacity));
+}
+
+.bg-primary {
+  --tw-bg-opacity: 1;
+  background-color: hsl(228 37% 16% / var(--tw-bg-opacity));
+}
+
+.bg-foot {
+  --tw-bg-opacity: 1;
+  background-color: hsl(228 35% 11% / var(--tw-bg-opacity));
+}
