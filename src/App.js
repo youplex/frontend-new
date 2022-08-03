@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import { Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home';
 import Login from './Pages/Login';
-import CreatePlaylist from './Pages/CreatePlaylist';
+import CreatePlaylist from './Pages/createPlaylist';
 
 function App() {
   return (

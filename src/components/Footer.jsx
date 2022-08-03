@@ -1,6 +1,13 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-function navbar() {
+function Footer() {
+  const { pathname } = useLocation();
+
+  if(pathname === '/login'){
+    return null;
+  }
+
   return (
     <>
       <div className="container">
@@ -15,4 +22,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Footer;
