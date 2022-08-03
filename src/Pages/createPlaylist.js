@@ -1,30 +1,9 @@
 import React from 'react';
-import { HiOutlineBell, HiOutlineUserCircle } from "react-icons/hi";
 
-function createPlaylist() {
+function CreatePlaylist() {
   return (
     <>
       {/* Navbar */}
-      <nav className="relative container mx-auto p-6 ">
-        {/* Flex container */}
-        <div className=" flex items-center justify-between">
-          {/* Logo */}
-          <div className="pt-2">
-            <a href="www.google.com">
-              <i className="fa-solid fa-bolt" />
-            </a>
-          </div>
-          {/* Menu Items */}
-          <div className="space-x-6 md:flex" style={{ marginLeft: "50%" }}>
-            <a href="www.google.com" className="hover:bg-blue-700">
-              <HiOutlineBell size={22} />
-            </a>
-            <a href="www.google.com" className="hover:bg-blue-700">
-              <HiOutlineUserCircle size={22} />
-            </a>
-          </div>
-        </div>
-      </nav>
       <div>
         {/* Flex Container */}
         <div className="container flex flex-col-reverse justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0 text-center ax-w-lg text-4xl font-bold text-center md:text-3xl">
@@ -65,4 +44,4 @@ function createPlaylist() {
   );
 }
 
-export default createPlaylist; 
+export default CreatePlaylist; 
