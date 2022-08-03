@@ -30,9 +30,9 @@ class AccordionApp extends React.Component {
       <div id="faq">
         <footer className=" container bg-faq justify-center items-center ">
           {/* Flex Container */}
-          <h1 className="justify-center items-center pt-10 mx-auto text-4xl text-white font-bold text-center md:text-3xl w-3/5">
+          <div className="justify-center items-center pt-10 mx-auto text-4xl text-white font-bold text-center md:text-3xl w-3/5">
             <Header title={title} />
-          </h1>
+          </div>
 
           <div className="container justify-between px-6 py-10 mx-auto text-white space-y-8 md:flex-row md:space-y-0 max-w-5xl">
             <Accordion hiddenTexts={hiddenTexts} />

@@ -1,40 +1,35 @@
-import { useEffect, useState } from 'react';
-import jwt_decode from "jwt-decode";
+import { useState } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 import loginhero from "../assets/loginhero.png";
+import axios from 'axios';
 
 function Login() {
-
+  axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
   const [user, setUser] = useState({});
 
-  function handleCallbackResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    var userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    setUser(userObject);
-    document.getElementById("signInDiv").hidden = true;
+  const handleSuccess = async (res) => {
+    try{
+        const { data } = await axios.post('/auth/login', { code: res.code }, {
+          withCredentials: true,
+        });
+        console.log( data );
+    }catch(error){
+        console.log(error);
+    }
   }
 
-  function handleSignOut(event) {
-    setUser({});
-    document.getElementById("signInDiv").hidden = false;
+  const handleError = (res) => {
+    console.log('error', res);
+    alert('Some Error occured check console')
   }
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: "1001852224050-vgrsbike4s77osot5j0e37p6cdlvh3hs.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    })
-
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      { theme: "outline", size: "large" }
-    );
-  }, []);
-
-  // If we have no user :show sign in button
-  // If we have a user: show sing out button
-
+  const login = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: handleSuccess,
+    onError: handleError,
+    scope:"openid email profile https://www.googleapis.com/auth/calendar",
+    
+  });
 
   return (
     <div className="App">
@@ -54,15 +49,12 @@ function Login() {
               Distraction Free Playlist
             </h1>
             <div className="flex justify-center">
-              <div id='signInDiv'></div>
+              <button id='signInDiv' className='border border-3 py-2 px-6 border-black' onClick={() => login()}>Login with Google</button>
               {
                 user &&
                 <div>
                   <h3>{user.name}</h3>
                 </div>
-              }
-              {Object.keys(user).length !== 0 &&
-                <button onClick={(e) => handleSignOut(e)}> Sign Out</button>
               }
             </div>
           </div>
