@@ -1,7 +1,7 @@
 import React from "react";
 import hero from "../assets/hero.png";
 import { HiChevronDown } from "react-icons/hi";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -16,11 +16,11 @@ function Header() {
           >
             {/* Left item */}
             <div className=" flex flex-col mb-40 space-y-12 md:w-1/2 ">
-              <h1 className="max-w-lg text-5xl font-bold text-center md:text-5xl  md:text-left">
+              <h1 className="max-w-lg text-5xl font-bold text-center md:text-5xl bg-text  md:text-left">
                 The smartest way to learn from Youtube !
               </h1>
               <p
-                className=" text-lg max-w-sm text-center text-darkGrayishBlue md:text-left"
+                className=" text-lg max-w-sm text-center bg-text md:text-left"
                 style={{ marginTop: 12 }}
               >
                 Create your scheduled playlists and maintain notes with custom
@@ -28,8 +28,8 @@ function Header() {
               </p>
               <div className="flex justify-center md:justify-start">
                 <Link
-                  to={'/login'}
-                  className="hidden p-3 px-6 pt-2 text-white bg-btncol rounded-lg baseline hover:bg-btnLight md:block"
+                  to={"/login"}
+                  className="hidden p-3 px-6 pt-2 text-white bg-btn hover:bg-blue-700  rounded-lg baseline md:block"
                 >
                   Get Started
                 </Link>
@@ -50,14 +50,14 @@ function Header() {
           </div>
           <a
             href="#features"
-            className="hover:text-darkGrayishBlue flex justify-center items-center"
+            className="hover:text-darkGrayishBlue flex justify-center items-center bg-text"
             style={{
               marginTop: "-12rem",
             }}
           >
             Scroll Down
           </a>
-          <p className="flex justify-center items-center">
+          <p className="flex justify-center items-center bg-text">
             <HiChevronDown />
           </p>
         </section>

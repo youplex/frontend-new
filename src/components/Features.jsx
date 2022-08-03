@@ -21,10 +21,10 @@ function features() {
               <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row ">
                 {/* Heading */}
                 <div style={{ marginTop: "8rem" }}>
-                  <h1 className="text-4xl font-bold mb-4 font-bold md:block">
+                  <h1 className="text-4xl font-bold mb-4 font-bold md:block bg-text">
                     Combine multiple playlists
                   </h1>
-                  <p className="max-w-sm text-darkGrayishBlue text-lg">
+                  <p className="max-w-sm text-darkGrayishBlue text-lg bg-text">
                     You can add multiple playlists and customise them according
                     to your preferences in one click.
                   </p>
@@ -40,10 +40,10 @@ function features() {
               <div className="flex flex-col space-y-0 md:space-y-0 md:space-x-6 md:flex-row justify-center">
                 {/* Heading */}
                 <div style={{ marginTop: "8rem" }}>
-                  <h1 className="text-4xl font-bold mb-4 font-bold md:block ">
+                  <h1 className="text-4xl font-bold mb-4 font-bold md:block bg-text ">
                     Schedule Notifications
                   </h1>
-                  <p className="max-w-sm text-darkGrayishBlue text-lg">
+                  <p className="max-w-sm text-darkGrayishBlue text-lg bg-text">
                     Get your timings sorted by integrating your playlist with
                     Google Calendar and schedule your learning.
                   </p>
@@ -75,10 +75,10 @@ function features() {
               <div className="flex flex-col space-y-0 md:space-y-0 md:space-x-6 md:flex-row ">
                 {/* Heading */}
                 <div style={{ marginTop: "8rem" }}>
-                  <h1 className="text-4xl font-bold mb-4 font-bold md:block">
+                  <h1 className="text-4xl font-bold mb-4 font-bold md:block bg-text">
                     Prepare notes on the Go
                   </h1>
-                  <p className="max-w-sm text-darkGrayishBlue text-lg">
+                  <p className="max-w-sm text-darkGrayishBlue text-lg bg-text">
                     Creation of notes based on timestamp was never this easy.
                     Just click and add the notes for that particular time
                     duration.
@@ -95,10 +95,10 @@ function features() {
               <div className="flex flex-col space-y-0 md:space-y-0 md:space-x-6 md:flex-row justify-center">
                 {/* Heading */}
                 <div style={{ marginTop: "8rem" }}>
-                  <h1 className="text-4xl font-bold mb-4 font-bold md:block ">
+                  <h1 className="text-4xl font-bold mb-4 font-bold md:block bg-text">
                     Personalised Analytics
                   </h1>
-                  <p className="max-w-sm text-darkGrayishBlue text-lg">
+                  <p className="max-w-sm text-darkGrayishBlue text-lg bg-text">
                     See which part of the topic you spent most of your time!
                     Maintain learning streaks and share it with your friends.
                   </p>
