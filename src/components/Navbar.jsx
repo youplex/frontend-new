@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 
 function Navbar() {
   const { pathname } = useLocation();
-  console.log(pathname);
 
   if(pathname === '/login'){
     return  <nav className="relative container mx-auto p-6 ">

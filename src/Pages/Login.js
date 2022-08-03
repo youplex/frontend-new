@@ -1,20 +1,26 @@
-import { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import loginhero from "../assets/loginhero.png";
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setToken, setUser } from '../redux/services/authSlice';
+import { useNavigate } from 'react-router';
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
-  const [user, setUser] = useState({});
 
   const handleSuccess = async (res) => {
     try{
         const { data } = await axios.post('/auth/login', { code: res.code }, {
           withCredentials: true,
         });
-        console.log( data );
+        dispatch(setToken(data.token));
+        dispatch(setUser(data.user));
+        navigate('/createplaylist');
     }catch(error){
-        console.log(error);
+      alert('Login error');
+      console.log(error);
     }
   }
 
@@ -50,12 +56,6 @@ function Login() {
             </h1>
             <div className="flex justify-center">
               <button id='signInDiv' className='border border-3 py-2 px-6 border-black' onClick={() => login()}>Login with Google</button>
-              {
-                user &&
-                <div>
-                  <h3>{user.name}</h3>
-                </div>
-              }
             </div>
           </div>
         </div>
