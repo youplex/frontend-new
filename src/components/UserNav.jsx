@@ -1,28 +1,39 @@
-import { HiOutlineBell, HiOutlineUserCircle } from "react-icons/hi";
+import {
+  HiOutlineBell,
+  HiOutlineUserCircle,
+  HiOutlineLightningBolt,
+} from "react-icons/hi";
+import { NavLink } from "react-router-dom";
 
-const UserNav = ()  => {
-    return (
-        <nav className="relative container mx-auto p-6 ">
-        {/* Flex container */}
-        <div className=" flex items-center justify-between">
-          {/* Logo */}
-          <div className="pt-2">
-            <a href="www.google.com">
-              <i className="fa-solid fa-bolt" />
-            </a>
-          </div>
-          {/* Menu Items */}
-          <div className="space-x-6 md:flex" style={{ marginLeft: "50%" }}>
-            <a href="www.google.com" className="hover:bg-blue-700">
-              <HiOutlineBell size={22} />
-            </a>
-            <a href="www.google.com" className="hover:bg-blue-700">
-              <HiOutlineUserCircle size={22} />
-            </a>
-          </div>
+const UserNav = () => {
+  return (
+    <nav className="relative container mx-auto p-6 ">
+      {/* Flex container */}
+      <div className=" flex items-center justify-between">
+        {/* Logo */}
+        <div className="pt-2">
+          <HiOutlineLightningBolt size={22} />
         </div>
-      </nav>
-    )
-}
+        <div>
+          <NavLink
+            to={"/"}
+            className="max-w-md text-lg font-bold text-center md:text-md md:text-left bg-text mr-60"
+          >
+            Playlist Management
+          </NavLink>
+        </div>
+        {/* Menu Items */}
+        <div className="space-x-6 md:flex" style={{ marginLeft: "50%" }}>
+          <a href="www.google.com" className="hover:text-blue-700">
+            <HiOutlineBell size={22} />
+          </a>
+          <a href="www.google.com" className="hover:text-blue-700">
+            <HiOutlineUserCircle size={22} />
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 export default UserNav;

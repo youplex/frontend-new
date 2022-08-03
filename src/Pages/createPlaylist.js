@@ -27,7 +27,7 @@ function CreatePlaylist() {
         <div className="flex justify-center md:justify-center">
           <a
             href=" #"
-            className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-btnLight md:block"
+            className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
           >
             Generate Playlist
           </a>
