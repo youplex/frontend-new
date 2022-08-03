@@ -1,8 +1,9 @@
 import React from 'react';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { HiOutlinePlusCircle } from "react-icons/hi";
 
 function CreatePlaylist() {
-  const { user } = useSelector((state) => ({...state.auth}));
+  const { user } = useSelector((state) => ({ ...state.auth }));
 
   return (
     <>
@@ -18,11 +19,8 @@ function CreatePlaylist() {
         <div className="search container flex justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0">
           <form action="#">
             <input type="text" placeholder=" Search Courses" name="search" />
-            <button>
-              <i
-                className="fa-solid fa-circle-plus"
-                style={{ fontSize: 20, marginLeft: "2rem" }}
-              ></i>
+            <button style={{ fontSize: 24, marginLeft: "2rem" }}>
+              <HiOutlinePlusCircle />
             </button>
           </form>
         </div>

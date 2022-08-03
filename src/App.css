@@ -66,3 +66,10 @@
   --tw-bg-opacity: 1;
   background-color: hsl(224 90% 24% / var(--tw-bg-opacity));
 }
+
+.search input[type="text"] {
+  width: 600px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid black;
+}

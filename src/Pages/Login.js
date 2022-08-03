@@ -11,14 +11,14 @@ function Login() {
   axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
   const handleSuccess = async (res) => {
-    try{
-        const { data } = await axios.post('/auth/login', { code: res.code }, {
-          withCredentials: true,
-        });
-        dispatch(setToken(data.token));
-        dispatch(setUser(data.user));
-        navigate('/createplaylist');
-    }catch(error){
+    try {
+      const { data } = await axios.post('/auth/login', { code: res.code }, {
+        withCredentials: true,
+      });
+      dispatch(setToken(data.token));
+      dispatch(setUser(data.user));
+      navigate('/createplaylist');
+    } catch (error) {
       alert('Login error');
       console.log(error);
     }
@@ -33,8 +33,8 @@ function Login() {
     flow: 'auth-code',
     onSuccess: handleSuccess,
     onError: handleError,
-    scope:"openid email profile https://www.googleapis.com/auth/calendar",
-    
+    scope: "openid email profile https://www.googleapis.com/auth/calendar",
+
   });
 
   return (
@@ -55,7 +55,7 @@ function Login() {
               Distraction Free Playlist
             </h1>
             <div className="flex justify-center">
-              <button id='signInDiv' className='border border-3 py-2 px-6 border-black' onClick={() => login()}>Login with Google</button>
+              <button id='signInDiv' className='p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block' onClick={() => login()}>Login with Google</button>
             </div>
           </div>
         </div>

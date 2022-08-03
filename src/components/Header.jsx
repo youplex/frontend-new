@@ -50,7 +50,7 @@ function Header() {
           </div>
           <a
             href="#features"
-            className="hover:text-darkGrayishBlue flex justify-center items-center bg-text"
+            className="hover:text-blue-700 flex justify-center items-center bg-text"
             style={{
               marginTop: "-12rem",
             }}
