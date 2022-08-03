@@ -11,7 +11,7 @@ const UserNav = () => {
       {/* Flex container */}
       <div className=" flex items-center justify-between">
         {/* Logo */}
-        <div className="pt-2">
+        <div>
           <HiOutlineLightningBolt size={22} />
         </div>
         <div>

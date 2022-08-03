@@ -6,10 +6,7 @@ const GeneralNav = () => {
     <>
       <div className="container">
         {/* Navbar */}
-        <nav
-          className="relative container mx-auto p-6"
-          style={{ width: "80%" }}
-        >
+        <nav className="relative container mx-auto p-6">
           {/* Flex container */}
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -17,7 +14,7 @@ const GeneralNav = () => {
               <HiOutlineLightningBolt size={22} />
             </div>
             <div className="pt-2">
-              <h1 className="max-w-md text-lg font-bold text-center md:text-md md:text-left bg-text">
+              <h1 className="max-w-md text-lg font-bold text-center md:text-md md:text-left bg-text mr-60">
                 Playlist Management
               </h1>
             </div>

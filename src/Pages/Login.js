@@ -40,7 +40,7 @@ function Login() {
   return (
     <div className="App">
       <div className="text-gray-600 body-font">
-        <div className="container mx-auto flex md:flex-row flex-col items-center">
+        <div className="container mx-auto flex md:flex-row flex-col items-center" style={{ width: "90%" }}>
           <div className="lg:max-w-xl lg:w-full md:w-3/2 w-5/6 mb-10 md:mb-0">
             <img
               className="object-cover object-center rounded w-3/4 ml-8"

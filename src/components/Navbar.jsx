@@ -14,8 +14,16 @@ function Navbar() {
         {/* Flex container */}
         <div className=" flex items-center justify-between">
           {/* Logo */}
-          <div className="pt-2">
-            <HiOutlineLightningBolt />
+          <div>
+            <HiOutlineLightningBolt size={22} />
+          </div>
+          <div>
+            <NavLink
+              to={"/"}
+              className="max-w-xl text-lg font-bold text-center md:text-xl md:text-left bg-text mr-60"
+            >
+              Playlist Management
+            </NavLink>
           </div>
           {/* Menu Items */}
           <div className="space-x-6 md:flex" style={{ marginLeft: "50%" }}>
