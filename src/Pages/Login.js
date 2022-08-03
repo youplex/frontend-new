@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router';
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
   const handleSuccess = async (res) => {
     try {
