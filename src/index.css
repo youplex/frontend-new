@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
-html{
- scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-#hero::before{
-  content: '';
+#hero::before {
+  content: "";
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
   height: 100vh;
   width: 600px;
   background-image: url(./assets/Background.png);
@@ -56,12 +56,10 @@ h1 {
 .accordion__button span {
   height: 30px;
   width: 30px;
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  background: #1A2038;
   font-size: 15px;
 }
 

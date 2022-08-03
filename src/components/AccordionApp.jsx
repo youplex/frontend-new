@@ -1,6 +1,6 @@
 import React from "react";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
- 
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
+
 class AccordionApp extends React.Component {
   render() {
     const title = "Frequently Asked Questions";
@@ -28,13 +28,13 @@ class AccordionApp extends React.Component {
     ];
     return (
       <div id="faq">
-        <footer className=" container bg-primary justify-center items-center ">
+        <footer className=" container bg-faq justify-center items-center ">
           {/* Flex Container */}
-          <h1 className="justify-center items-center pt-10 mx-auto text-4xl text-white font-bold text-center md:text-3xl max-w-7xl">
+          <h1 className="justify-center items-center pt-10 mx-auto text-4xl text-white font-bold text-center md:text-3xl w-3/5">
             <Header title={title} />
           </h1>
 
-          <div className="container justify-between px-6 py-10 mx-auto text-white space-y-8 md:flex-row md:space-y-0 max-w-7xl">
+          <div className="container justify-between px-6 py-10 mx-auto text-white space-y-8 md:flex-row md:space-y-0 max-w-5xl">
             <Accordion hiddenTexts={hiddenTexts} />
           </div>
         </footer>
@@ -87,7 +87,13 @@ class AccordionItem extends React.Component {
           onClick={this.handleToggleVisibility}
         >
           {this.props.hiddenText.label}
-          <span>{this.state.visibility ? <AiOutlineArrowUp size={22} /> : <AiOutlineArrowDown size={22}/>}</span>
+          <span>
+            {this.state.visibility ? (
+              <HiChevronUp size={22} />
+            ) : (
+              <HiChevronDown size={22} />
+            )}
+          </span>
         </button>
         <p className={`accordion__content ${activeStatus}`}>
           {this.props.hiddenText.value}

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -19,7 +19,7 @@ function Navbar() {
               </h1>
             </div>
             {/* Menu Items */}
-            <div className="space-x-6 md:flex" style={{ marginLeft: "50%" }}>
+            <div className="space-x-6 md:flex ml-80">
               <a href="#features" className="hover:text-darkGrayishBlue">
                 Features
               </a>
@@ -29,8 +29,8 @@ function Navbar() {
             </div>
             {/* Button */}
             <NavLink
-              to={'/login'}
-              className="hidden p-3 px-6 pt-2 text-white bg-btncol rounded-lg baseline hover:bg-btnLight md:block"
+              to={"/login"}
+              className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-btn md:block"
             >
               Get Started
             </NavLink>

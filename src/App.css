@@ -37,22 +37,32 @@
   }
 }
 
-.bg-btncol {
+.bg-btn {
   --tw-bg-opacity: 1;
-  background-color: hsl(230 55% 29% / var(--tw-bg-opacity));
-}
-
-.bg-btnLight {
-  --tw-bg-opacity: 1;
-  background-color: hsl(0 0% 98% / var(--tw-bg-opacity));
+  background-color: hsl(223 84% 37% / var(--tw-bg-opacity));
 }
 
 .bg-primary {
   --tw-bg-opacity: 1;
-  background-color: hsl(228 37% 16% / var(--tw-bg-opacity));
+  background-color: hsl(223 91% 32% / var(--tw-bg-opacity));
 }
 
-.bg-foot {
+.bg-text {
+  --tw-bg-opacity: 1;
+  background-color: hsl(0 0% 16% / var(--tw-bg-opacity));
+}
+
+.bg-card {
+  --tw-bg-opacity: 1;
+  background-color: hsl(232 100% 98% / var(--tw-bg-opacity));
+}
+
+.bg-footer {
   --tw-bg-opacity: 1;
   background-color: hsl(228 35% 11% / var(--tw-bg-opacity));
+}
+
+.bg-faq {
+  --tw-bg-opacity: 1;
+  background-color: hsl(224 90% 24% / var(--tw-bg-opacity));
 }

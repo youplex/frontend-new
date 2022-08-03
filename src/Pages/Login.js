@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
-import header from "../assets/hero.png";
+import loginhero from "../assets/loginhero.png";
 
 function Login() {
 
@@ -42,13 +42,13 @@ function Login() {
         <div className="container mx-auto flex md:flex-row flex-col items-center">
           <div className="lg:max-w-xl lg:w-full md:w-3/2 w-5/6 mb-10 md:mb-0">
             <img
-              className="object-cover object-center rounded"
+              className="object-cover object-center rounded w-3/4 ml-8"
               alt="hero"
-              src={header}
+              src={loginhero}
             />
           </div>
           <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-            <h1 className="title-font sm:text-4xl text-5xl mb-4 font-bold text-gray-900">
+            <h1 className="title-font sm:text-4xl text-5xl mb-4 font-bold text-gray-900 text-left -mt-16">
               Create Your First
               <br className="hidden lg:inline-block" />
               Distraction Free Playlist
