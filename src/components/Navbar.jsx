@@ -8,6 +8,10 @@ import { HiOutlineLightningBolt } from "react-icons/hi";
 function Navbar() {
   const { pathname } = useLocation();
 
+  if(pathname === '/dashboard' || pathname === '/home'){
+    return null;
+  }
+
   if (pathname === "/login") {
     return (
       <nav className="relative container mx-auto p-6 ">

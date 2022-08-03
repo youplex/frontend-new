@@ -10,6 +10,9 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUser } from './redux/services/authSlice';
+import Dashboard from './Pages/Dashboard';
+import UserHome from './Pages/UserHome';
+
 
 function App() {
   const { token } = useSelector((state) => ({...state.auth}));
@@ -37,9 +40,11 @@ function App() {
    <>
    <Navbar />
    <Routes>
-    <Route path='/' element={<Home />} />
-    <Route path='/login' element={<Login />} />
-    <Route path='/createplaylist' element={<CreatePlaylist />}/>
+      <Route path='/' element={<Home />} />
+      <Route path='/home' element={<UserHome />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/createplaylist' element={<CreatePlaylist />}/>
+      <Route path='/dashboard' element={<Dashboard />} />
    </Routes>
    <Footer /> 
    </>
