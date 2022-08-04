@@ -3,7 +3,7 @@ import hero from "../assets/hero.png";
 import { HiChevronDown } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-function Header() {
+function LandingHeader() {
   return (
     <>
       <div className="container">
@@ -66,4 +66,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default LandingHeader;

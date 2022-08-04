@@ -4,7 +4,7 @@ import im2 from "../assets/im2.png";
 import im3 from "../assets/im3.png";
 import im4 from "../assets/im4.png";
 
-function features() {
+function LandingFeatures() {
   return (
     <>
       <div className="container">
@@ -120,4 +120,4 @@ function features() {
   );
 }
 
-export default features;
+export default LandingFeatures;

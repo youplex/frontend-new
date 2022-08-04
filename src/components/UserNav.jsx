@@ -19,7 +19,7 @@ const UserNav = () => {
             to={"/"}
             className="max-w-md text-lg font-bold text-center md:text-md md:text-left bg-text mr-60"
           >
-            Playlist Management
+            YouPlex
           </NavLink>
         </div>
         {/* Menu Items */}
