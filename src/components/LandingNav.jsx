@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 
-const GeneralNav = () => {
+const LandingNav = () => {
   return (
     <>
       <div className="container">
@@ -15,7 +15,7 @@ const GeneralNav = () => {
             </div>
             <div className="pt-2">
               <h1 className="max-w-md text-lg font-bold text-center md:text-md md:text-left bg-text mr-60">
-                Playlist Management
+                YouPlex
               </h1>
             </div>
             {/* Menu Items */}
@@ -41,4 +41,4 @@ const GeneralNav = () => {
   );
 };
 
-export default GeneralNav;
+export default LandingNav;

@@ -1,6 +1,8 @@
-import Navbar from '../components/_components/Navbar';
-import Sidebar from '../components/_components/Sidebar';
-import ProgressTracker from '../components/_components/ProgressTracker';
+
+import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
+
+import ProgressTracker from '../components/ProgressTracker';
 
 const Dashboard = () => {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
-class AccordionApp extends React.Component {
+class Faq extends React.Component {
   render() {
     const title = "Frequently Asked Questions";
     const hiddenTexts = [
@@ -103,4 +103,4 @@ class AccordionItem extends React.Component {
   }
 }
 
-export default AccordionApp;
+export default Faq;

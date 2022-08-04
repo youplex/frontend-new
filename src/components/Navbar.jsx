@@ -1,48 +1,30 @@
 import React from "react";
-import GeneralNav from "./GeneralNav";
-import { useLocation } from "react-router-dom";
-import UserNav from "./UserNav";
-import { NavLink } from "react-router-dom";
-import { HiOutlineLightningBolt } from "react-icons/hi";
 
-function Navbar() {
-  const { pathname } = useLocation();
+import { Link } from "react-router-dom";
 
-  if(pathname === '/dashboard' || pathname === '/home'){
-    return null;
-  }
+import * as AiIcons from "react-icons/ai";
+// import * as NoteIcon from "react-icons/fa";
 
-  if (pathname === "/login") {
-    return (
-      <nav className="relative container mx-auto p-6 ">
-        {/* Flex container */}
-        <div className=" flex items-center justify-between">
-          {/* Logo */}
-          <div>
-            <HiOutlineLightningBolt size={22} />
-          </div>
-          <div>
-            <NavLink
-              to={"/"}
-              className="max-w-xl text-lg font-bold text-center md:text-xl md:text-left bg-text mr-60"
-            >
-              Playlist Management
-            </NavLink>
-          </div>
-          {/* Menu Items */}
-          <div className="space-x-6 md:flex" style={{ marginLeft: "50%" }}>
-            <NavLink to={"/"} className="hover:text-blue-700">
-              Back
-            </NavLink>
-          </div>
-        </div>
-      </nav>
-    );
-  } else if (pathname === "/") {
-    return <GeneralNav />;
-  } else {
-    return <UserNav />;
-  }
+import * as IoIcons from "react-icons/io5";
+
+function Navbar({ page }) {
+  return (
+    <div className=" flex justify-between  ml-52   py-10 h-16 w-4/5  ">
+      <h1 className="text-bold  font-bold text-3xl">{page}</h1>
+      <div className="flex list-none px-2">
+        <li className="px-4">
+          <Link to="#">
+            <AiIcons.AiOutlineBell />
+          </Link>
+        </li>
+        <li className=" px-4">
+          <Link to="#">
+            <IoIcons.IoPersonCircleOutline />
+          </Link>
+        </li>
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;
