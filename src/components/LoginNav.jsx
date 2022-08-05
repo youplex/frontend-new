@@ -1,5 +1,4 @@
 import React from "react";
-import GeneralNav from "./LandingNav";
 import { useLocation } from "react-router-dom";
 import UserNav from "./UserNav";
 import { NavLink } from "react-router-dom";
@@ -19,7 +18,7 @@ function LoginNav({}) {
         <div className=" flex items-center justify-between">
           {/* Logo */}
           <div>
-            <HiOutlineLightningBolt size={22} />
+            <HiOutlineLightningBolt size={32} />
           </div>
 
           {/* Menu Items */}

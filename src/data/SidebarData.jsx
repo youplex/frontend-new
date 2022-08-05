@@ -1,40 +1,36 @@
 import React from "react";
-
-import * as AiIcons from "react-icons/ai";
-
-import * as BsIcons from "react-icons/bs";
-// import * as AiIcons from "react-icons/ai";
+import * as Heroicons from "react-icons/hi";
 
 export const SidebarData = [
   {
     title: "Logo",
     path: "/",
-    icon: <BsIcons.BsFillLightningChargeFill />,
+    icon: <Heroicons.HiLightningBolt size={32} />,
     cName: "sidebar-text",
   },
 
   {
     title: "Home",
     path: "/",
-    icon: <AiIcons.AiOutlineHome />,
+    icon: <Heroicons.HiOutlineHome size={22} />,
     cName: "sidebar-text",
   },
   {
     title: "Search",
     path: "/",
-    icon: <AiIcons.AiOutlineSearch />,
+    icon: <Heroicons.HiOutlineSearch size={22} />,
     cName: "sidebar-text",
   },
   {
     title: "View Schedule",
     path: "/schedule",
-    icon: <AiIcons.AiOutlineCalendar />,
+    icon: <Heroicons.HiOutlineCalendar size={22} />,
     cName: "sidebar-text",
   },
   {
     title: "Notes",
     path: "/notes",
-    icon: <AiIcons.AiOutlineFile />,
+    icon: <Heroicons.HiOutlineDocumentAdd size={22} />,
     cName: "sidebar-text",
   },
 ];

@@ -1,9 +1,9 @@
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from "@react-oauth/google";
 import loginhero from "../assets/loginhero.png";
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setToken, setUser } from '../redux/services/authSlice';
-import { useNavigate } from 'react-router';
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../redux/services/authSlice";
+import { useNavigate } from "react-router";
 
 function Login() {
   const navigate = useNavigate();
@@ -11,57 +11,65 @@ function Login() {
 
   const handleSuccess = async (res) => {
     try {
-      const { data } = await axios.post('/auth/login', { code: res.code }, {
-        withCredentials: true,
-      });
+      const { data } = await axios.post(
+        "/auth/login",
+        { code: res.code },
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));
-      navigate('/createplaylist');
+      navigate("/createplaylist");
     } catch (error) {
-      alert('Login error');
+      alert("Login error");
       console.log(error);
     }
-  }
+  };
 
   const handleError = (res) => {
-    console.log('error', res);
-    alert('Some Error occured check console')
-  }
+    console.log("error", res);
+    alert("Some Error occured check console");
+  };
 
   const login = useGoogleLogin({
-    flow: 'auth-code',
+    flow: "auth-code",
     onSuccess: handleSuccess,
     onError: handleError,
     scope: "openid email profile https://www.googleapis.com/auth/calendar",
-
   });
 
   return (
     <div className="App">
-      <div className="text-gray-600 body-font">
-        <div className="container mx-auto flex md:flex-row flex-col items-center" style={{ width: "90%" }}>
-          <div className="lg:max-w-xl lg:w-full md:w-3/2 w-5/6 mb-10 md:mb-0">
+      <section className="text-bg">
+        <div className="container mx-auto flex px-2 py-10 md:flex-row flex-col items-center">
+          <div className="lg:max-w-full lg:w-full md:w-1/2 w-5/6 max-w-2xl">
             <img
-              className="object-cover object-center rounded w-3/4 ml-8"
+              className="object-cover object-center rounded w-3/6
+              "
               alt="hero"
               src={loginhero}
             />
           </div>
-          <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-            <h1 className="title-font sm:text-4xl text-5xl mb-4 font-bold bg-text text-left -mt-16">
+          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center mr-16">
+            <h1 className="sm:text-5xl text-5xl mb-8 font-bold text-bg">
               Create Your First
               <br className="hidden lg:inline-block" />
               Distraction Free Playlist
             </h1>
             <div className="flex justify-center">
-              <button id='signInDiv' className='p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block' onClick={() => login()}>Login with Google</button>
+              <button
+                id="signInDiv"
+                className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
+                onClick={() => login()}
+              >
+                Login with Google
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-
-
   );
 }
 

@@ -13,23 +13,24 @@ import { useDispatch } from 'react-redux';
 import { setUser } from './redux/services/authSlice';
 import Dashboard from './pages/Dashboard';
 import UserHome from './pages/UserHome';
+import PlaylistDashboard from './pages/PlaylistDashboard';
 
 
 function App() {
-  const { token } = useSelector((state) => ({...state.auth}));
+  const { token } = useSelector((state) => ({ ...state.auth }));
   const dispatch = useDispatch();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-          const { data } = await axios.get('/user', {
-            headers: {
-              'x-auth-token': token
-            }
+        const { data } = await axios.get('/user', {
+          headers: {
+            'x-auth-token': token
+          }
         });
-        if(data){
-          dispatch(setUser(data)); 
-        } 
+        if (data) {
+          dispatch(setUser(data));
+        }
       } catch (error) {
         console.log(error);
       }
@@ -38,18 +39,19 @@ function App() {
   }, [token])
 
   return (
-   <>
-   
-   <Routes>
-      <Route path='/' element={<LandingPage />} />
-      <Route path='/home' element={<UserHome />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/createplaylist' element={<CreatePlaylist />}/>
-      <Route path='/dashboard' element={<Dashboard />} />
-      <Route path='/userhome' element={<UserHome />} />
-   </Routes>
-   <Footer /> 
-   </>
+    <>
+
+      <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/home' element={<UserHome />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/createplaylist' element={<CreatePlaylist />} />
+        <Route path='/PlaylistDashboard' element={<PlaylistDashboard />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/userhome' element={<UserHome />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
