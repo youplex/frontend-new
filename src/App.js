@@ -7,22 +7,21 @@ import { setUser } from './redux/services/authSlice';
 import { UserHome, Dashboard, LandingPage, CreatePlaylist, Login } from './pages';
 import { Footer } from './components'
 
-
 function App() {
-  const { token } = useSelector((state) => ({...state.auth}));
+  const { token } = useSelector((state) => ({ ...state.auth }));
   const dispatch = useDispatch();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-          const { data } = await axios.get('/user', {
-            headers: {
-              'x-auth-token': token
-            }
+        const { data } = await axios.get('/user', {
+          headers: {
+            'x-auth-token': token
+          }
         });
-        if(data){
-          dispatch(setUser(data)); 
-        } 
+        if (data) {
+          dispatch(setUser(data));
+        }
       } catch (error) {
         console.log(error);
       }

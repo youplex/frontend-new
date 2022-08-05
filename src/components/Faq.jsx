@@ -28,7 +28,7 @@ class Faq extends React.Component {
     ];
     return (
       <div id="faq">
-        <footer className=" container bg-faq justify-center items-center ">
+        <footer className=" bg-faq justify-center items-center mt-10 ">
           {/* Flex Container */}
           <div className="justify-center items-center pt-10 mx-auto text-4xl text-white font-bold text-center md:text-3xl w-3/5">
             <Header title={title} />

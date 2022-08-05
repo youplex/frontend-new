@@ -1,20 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { ProgressData } from "../data";
 import Card from "@mui/material/Card";
-
 import CardContent from "@mui/material/CardContent";
-
 import Typography from "@mui/material/Typography";
-
 import Playlist from "./Playlist";
 const btns = ["Date", "A-Z"];
 function Btn({ date, sort }) {
   return (
     <div className="ml-52 flex justify-between w-32 my-5 text-md ">
       <Link
-        className="bg-btn w-max text-white  py-px px-1 rounded text-bold"
+        className="bg-btn w-max text-white py-px px-1 rounded text-bold"
         to="#"
       >
         {date}
@@ -44,7 +40,6 @@ function ProgressTracker() {
                   <Typography variant="body2" color="text.secondary">
                     {item.title}
                   </Typography>
-
                   <div className="w-80 h-0.5 bg-slate-700">
                     <div
                       className={`w-${Math.floor(
@@ -59,7 +54,6 @@ function ProgressTracker() {
         </Card>
       </div>
       <Btn date="Date" sort="A-Z" />
-
       <Playlist header="Playlist Order" />
     </>
   );
