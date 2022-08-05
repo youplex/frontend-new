@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { SidebarData } from "../data/SidebarData";
-import { HiOutlinePlusCircle } from "react-icons/hi";
+import { SidebarData } from "../data";
+import * as AiIcons from "react-icons/ai";
+// import * as NoteIcon from "react-icons/fa";
 import { IconContext } from "react-icons";
-
 // import './sidebar.css';
 
 function Sidebar() {
@@ -36,5 +36,4 @@ function Sidebar() {
     </>
   );
 }
-
 export default Sidebar;

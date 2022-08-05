@@ -1,19 +1,13 @@
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
-
-import ProgressTracker from "../components/ProgressTracker";
-
+import { Navbar, ProgressTracker, Sidebar } from '../components'
 const Dashboard = () => {
   return (
     <>
       <Navbar page="User Profile" />
       <Sidebar />
       <ProgressTracker />
-
       {/* <SearchBar placeholder="Quick Search..."/> */}
       {/* <VideoPlayer /> */}
     </>
   );
 };
-
 export default Dashboard;

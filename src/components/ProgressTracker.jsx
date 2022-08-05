@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ProgressData } from "../data/ProgressData";
+import { ProgressData } from "../data";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -40,7 +40,6 @@ function ProgressTracker() {
                   <Typography variant="body2" color="text.secondary">
                     {item.title}
                   </Typography>
-
                   <div className="w-80 h-0.5 bg-slate-700">
                     <div
                       className={`w-${Math.floor(
@@ -55,7 +54,6 @@ function ProgressTracker() {
         </Card>
       </div>
       <Btn date="Date" sort="A-Z" />
-
       <Playlist header="Playlist Order" />
     </>
   );
