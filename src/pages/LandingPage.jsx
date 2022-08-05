@@ -1,7 +1,4 @@
-import LandingHeader from '../components/LandingHeader';
-import LandingNav from '../components/LandingNav';
-import LandingFeatures from '../components/LandingFeatures';
-import Faq from '../components/Faq';
+import { LandingFeatures, LandingHeader, LandingNav, Faq } from '../components' 
 
 function LandingPage() {
     return (

@@ -1,10 +1,4 @@
-
-import Sidebar from '../components/Sidebar';
-
-import Navbar from '../components/Navbar';
-
-import Playlist from '../components/Playlist';
-
+import { Navbar, Playlist, Sidebar } from '../components'
 
 function UserHome() {
   return (

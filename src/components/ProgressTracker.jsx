@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { ProgressData } from "../data/ProgressData";
+import { ProgressData } from "../data";
 import Card from "@mui/material/Card";
 
 import CardContent from "@mui/material/CardContent";
