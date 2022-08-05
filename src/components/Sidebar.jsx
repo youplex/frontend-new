@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SidebarData } from "../data";
-import * as AiIcons from "react-icons/ai";
+import { HiOutlinePlusCircle } from "react-icons/hi";
 // import * as NoteIcon from "react-icons/fa";
 import { IconContext } from "react-icons";
 // import './sidebar.css';
