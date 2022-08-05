@@ -1,5 +1,4 @@
-import { Navbar, Playlist, Sidebar } from '../components'
-
+import { Navbar, Playlist, Sidebar } from "../components";
 function UserHome() {
   return (
     <>
