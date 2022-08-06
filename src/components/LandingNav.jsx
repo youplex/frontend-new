@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightningBolt } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const LandingNav = () => {
+  const { token } = useSelector((state) => ({...state.auth}));
+
   return (
     <>
       <nav className="relative container mx-auto p-6">
@@ -21,12 +24,22 @@ const LandingNav = () => {
             </a>
           </div>
           {/* Button */}
+          {token 
+            ?
+            <NavLink
+            to={"/dashboard"}
+            className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
+          >
+            Visit Dashboard
+          </NavLink>
+          :
           <NavLink
             to={"/login"}
             className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
           >
             Login
           </NavLink>
+          }
           {/* Hamburger Icon */}
           <button
             id="menu-btn"

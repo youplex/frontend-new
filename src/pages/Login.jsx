@@ -1,13 +1,14 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import loginhero from "../assets/loginhero.png";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setToken, setUser } from "../redux/services/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUser, logoutUser } from "../redux/services/authSlice";
 import { useNavigate } from "react-router";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => ({...state.auth}));
 
   const handleSuccess = async (res) => {
     try {
@@ -39,6 +40,23 @@ function Login() {
     scope: "openid email profile https://www.googleapis.com/auth/calendar",
   });
 
+  const handleLogout = async () => {
+    try {
+      const { data, status } = await axios.post('/auth/logout', {}, {
+        headers: {
+          'x-auth-token': token
+        },
+        withCredentials: true
+      });
+      if(status === 200){
+        dispatch(logoutUser());
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="App">
       <section className="text-bg">
@@ -58,13 +76,22 @@ function Login() {
               Distraction Free Playlist
             </h1>
             <div className="flex justify-center">
-              <button
+              { token 
+               ?
+               <button onClick={handleLogout}
+                className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
+               >
+                Logout
+               </button>
+               :
+               <button
                 id="signInDiv"
                 className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
                 onClick={() => login()}
-              >
+               >
                 Login with Google
               </button>
+              }
             </div>
           </div>
         </div>
