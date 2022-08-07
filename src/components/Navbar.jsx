@@ -13,7 +13,7 @@ function Navbar({ page }) {
           </Link>
         </li>
         <li className=" px-4">
-          <Link to="#">
+          <Link to="/dashboard">
             <HiOutlineUserCircle size={22} />
           </Link>
         </li>
