@@ -8,7 +8,9 @@ import {AiOutlineSearch} from 'react-icons/ai';
 
 
 
+
 const SearchPlaylist = () => {
+    const { user } = useSelector((state) => ({ ...state.auth }));
     return (
        
         <>  
