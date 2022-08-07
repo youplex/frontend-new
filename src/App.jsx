@@ -10,7 +10,8 @@ import {
   LandingPage,
   CreatePlaylist,
   Login,
-  SearchPlaylist
+  SearchPlaylist,
+  Error
 } from "./pages";
 import { Footer } from "./components";
 import PlaylistDashboard from "./pages/PlaylistDashboard";
@@ -47,6 +48,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/playlistDashboard" element={<PlaylistDashboard />} />
         <Route  path="/search" element={<SearchPlaylist />}/>
+        <Route path ="/notes" element={<Error />} />
+        <Route path="/schedule" element={<Error />} />
       </Routes>
       <Footer />
     </>
