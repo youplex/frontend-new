@@ -9,7 +9,7 @@ function CreatePlaylist() {
   return (
     <>
       <Navbar page="Youplex" />
-      <div className="container flex flex-col-reverse justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0 text-center ax-w-lg text-4xl font-bold text-center md:text-3xl">
+      <div className="container flex flex-col-reverse  justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0 text-center ax-w-lg text-4xl font-bold text-center md:text-3xl">
         <h1>
           Welcome {user?.name || "John"}, <br />
           Create a New Playlist!
