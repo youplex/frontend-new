@@ -71,7 +71,7 @@ function Login() {
           </div>
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center sm-mr-16">
             <h1 className="sm:text-5xl md-text-5xl mb-8 font-bold text-bg text-3xl">
-              Create Your First {"\u00A0"}
+              Create Your First 
               <br className="hidden lg:inline-block" />
               Distraction Free Playlist
             </h1>
