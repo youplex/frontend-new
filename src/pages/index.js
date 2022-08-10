@@ -6,3 +6,4 @@ export { default as CreatePlaylist } from './createPlaylist';
 export { default as playlistDashboard } from './PlaylistDashboard';
 export {default as SearchPlaylist } from './SearchPlaylist';
 export {default as Error} from './Error';
+export{default as SinglePlaylist} from './SinglePlaylist';
