@@ -19,10 +19,10 @@ function Playlist({ header }) {
   return (
     <>
       <div className="ml-52 my-5 text-xl font-medium">{header}</div>
-      <div className="ml-52 w-4/5 h-min grid grid-cols-2 gap-2 mb-4 ">
+      <div className="ml-52 min-w-max h-min grid grid-cols-2 gap-2 mb-4 ">
         {PlaylistData.map((item, index) => {
           return (
-            <Link to="#">
+            <Link key={index} to="#">
               <Card sx={{ width: 400 }}>
                 <CardMedia component="img" image={item.img} alt={item.title} />
                 <CardContent style={{ padding: 2 }}>
