@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlinePlusCircle } from "react-icons/hi";
 import { Navbar } from "../components";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 function CreatePlaylist() {
-  const { user } = useSelector((state) => ({ ...state.auth }));
+  const { user, token } = useSelector((state) => ({ ...state.auth }));
+  const [playlistURL, setPlaylistURL] = useState('');
+  const navigate = useNavigate();
+
+  const handleCreatePlaylist = async (e) => {
+    e.preventDefault();
+    const link = new URL(playlistURL);
+    const listId= link?.searchParams?.get('list');
+    const matchesPlaylistPattern = listId?.startsWith('PL');
+    if(!matchesPlaylistPattern || link.hostname !== 'www.youtube.com')
+    {
+      alert('Playlist link is incorrect, try again')
+      return;
+    }
+    try {
+        const { data, status } = await axios.post('/playlist/create', { listId }, {
+          headers: {
+            'x-auth-token': token
+          }, withCredentials: true
+        });
+        if(status === 200)
+        {
+          navigate('/dashboard');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+  }
 
   return (
     <>
@@ -16,21 +45,30 @@ function CreatePlaylist() {
         </h1>
       </div>
       <div className="search container flex justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0">
-        <form action="#">
-          <input type="text" placeholder=" Search Courses" name="search" />
+        <form onSubmit={handleCreatePlaylist}>
+          <input type="url" placeholder=" Search Courses" name="search" required 
+            value={playlistURL} onChange={(e) => setPlaylistURL(e.target.value)}
+           />
           <button style={{ fontSize: 24, marginLeft: "2rem" }}>
             <HiOutlinePlusCircle />
           </button>
+          <div className="flex justify-center mt-8">
+          <button
+            className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700"
+          >
+            Generate Playlist
+          </button>
+          </div>
         </form>
       </div>
-      <div className="flex justify-center md:justify-center">
+      {/* <div className="flex justify-center md:justify-center">
         <a
           href=" #"
           className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
         >
           Generate Playlist
         </a>
-      </div>
+      </div> */}
       <svg
         className="mt-10"
         xmlns="http://www.w3.org/2000/svg"
