@@ -11,13 +11,13 @@ export const SidebarData = [
 
   {
     title: "Home",
-    path: "/",
+    path: "/home",
     icon: <Heroicons.HiOutlineHome size={22} />,
     cName: "sidebar-text",
   },
   {
     title: "Search",
-    path: "/",
+    path: "/search",
     icon: <Heroicons.HiOutlineSearch size={22} />,
     cName: "sidebar-text",
   },
