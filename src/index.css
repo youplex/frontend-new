@@ -111,3 +111,17 @@ code {
   opacity: 1;
   padding: 20px;
 }
+
+@media screen and (max-width: 768px){
+  .login-container{
+    position: relative;
+  }
+  .login-action-box{
+    position: absolute;
+    border-radius: 10px;
+    top: 16%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), rgba(96, 96, 96, 0.45));
+    padding: 20px;
+    max-width: 90vw;
+  }
+}

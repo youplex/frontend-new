@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import { PlaylistData } from '../data';
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { usePlaylistQuery } from "../redux/services/playlistApi";
 
 const styles = {
   cardcontent: {
@@ -15,7 +17,9 @@ const styles = {
     },
   },
 };
-function Playlist({ header, playlistData, isLoading}) {
+function Playlist({ header }) {
+  const { token } = useSelector((state) => ({...state.auth}));
+  const { data: playlistData, isLoading } = usePlaylistQuery(token);
   return (
     <>
       <div className="ml-52 my-5 text-xl font-medium">{header}</div>

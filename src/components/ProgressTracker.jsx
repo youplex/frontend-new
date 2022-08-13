@@ -59,7 +59,7 @@ function ProgressTracker({playlistData, isLoading}) {
         )
       }
       <Btn date="Date" sort="A-Z" />
-      <Playlist header="Playlist Order" {...{playlistData, isLoading}} />
+      <Playlist header="Playlist Order" />
     </>
   );
 }
