@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => ({...state.auth}));
+  const { token } = useSelector((state) => ({ ...state.auth }));
 
   const handleSuccess = async (res) => {
     try {
@@ -42,20 +42,24 @@ function Login() {
 
   const handleLogout = async () => {
     try {
-      const { data, status } = await axios.post('/auth/logout', {}, {
-        headers: {
-          'x-auth-token': token
-        },
-        withCredentials: true
-      });
-      if(status === 200){
+      const { data, status } = await axios.post(
+        "/auth/logout",
+        {},
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+          withCredentials: true,
+        }
+      );
+      if (status === 200) {
         dispatch(logoutUser());
-        navigate('/');
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -71,27 +75,30 @@ function Login() {
           </div>
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center sm-mr-16">
             <h1 className="sm:text-5xl md-text-5xl mb-8 font-bold text-bg text-3xl">
+
+
               Create Your First 
+
               <br className="hidden lg:inline-block" />
               Distraction Free Playlist
             </h1>
             <div className="flex justify-center">
-              { token 
-               ?
-               <button onClick={handleLogout}
-                className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
-               >
-                Logout
-               </button>
-               :
-               <button
-                id="signInDiv"
-                className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
-                onClick={() => login()}
-               >
-                Login with Google
-              </button>
-              }
+              {token ? (
+                <button
+                  onClick={handleLogout}
+                  className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  id="signInDiv"
+                  className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block"
+                  onClick={() => login()}
+                >
+                  Login with Google
+                </button>
+              )}
             </div>
           </div>
         </div>
