@@ -28,8 +28,9 @@
   background-color: hsl(224 90% 24% / var(--tw-bg-opacity));
 }
 
-.search input[type="text"] {
+.search input[type="url"] {
   width: 600px;
+  max-width: 90vw;
   height: 30px;
   border-radius: 6px;
   border: 1px solid black;
