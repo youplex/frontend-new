@@ -10,18 +10,10 @@ import { useSelector } from "react-redux";
 import { usePlaylistQuery } from "../redux/services/playlistApi";
 import { useMemo } from 'react'
 
-const styles = {
-  cardcontent: {
-    padding: 0,
-    "$:last-child": {
-      paddingBottom: 0,
-    },
-  },
-};
+
 function Playlist({ header, sortType = '', searchTerm = '' }) {
   const { token } = useSelector((state) => ({...state.auth}));
   const { data: playlistData = [], isLoading } = usePlaylistQuery(token);
-  console.log(searchTerm);
 
   const filteredData = useMemo(() => {
     let filteredProducts = playlistData.slice();
