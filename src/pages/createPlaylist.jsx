@@ -29,6 +29,8 @@ function CreatePlaylist() {
         if(status === 200)
         {
           navigate('/dashboard');
+        }else{
+          console.log(data);
         }
     } catch (error) {
         console.log(error);
