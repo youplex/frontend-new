@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { HiOutlineBell, HiOutlineUserCircle } from "react-icons/hi";
 
+
 function Navbar({ page }) {
   return (
     <div className=" flex justify-between ml-52 py-6 h-16 w-4/5  ">

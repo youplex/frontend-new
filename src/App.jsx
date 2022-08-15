@@ -12,7 +12,8 @@ import {
   Login,
   SearchPlaylist,
   Error,
-  SinglePlaylist
+  SinglePlaylist,
+  VideoCourse
 } from "./pages";
 import { Footer } from "./components";
 import PlaylistDashboard from "./pages/PlaylistDashboard";
@@ -52,6 +53,7 @@ function App() {
         <Route path ="/notes" element={<Error />} />
         <Route path="/schedule" element={<Error />} />
         <Route path='/playlist' element={<SinglePlaylist />} />
+        <Route path="/courses" element={<VideoCourse />} />
       </Routes>
       <Footer />
     </>
