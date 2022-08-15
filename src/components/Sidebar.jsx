@@ -27,7 +27,7 @@ function Sidebar() {
 
           <Link
             className="flex  h-max w-max p-3 hover:bg-white rounded-full justify-start items-center p-3  "
-            to="#"
+            to="/createplaylist"
           >
             <HiOutlinePlusCircle size={22} />
           </Link>

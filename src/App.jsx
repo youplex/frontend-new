@@ -51,11 +51,11 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/playlistDashboard" element={<PlaylistDashboard />} />
         <Route  path="/search" element={<SearchPlaylist />}/>
-        {/* <Route path ="/notes" element={<Error />} /> */}
         <Route path="/schedule" element={<Error />} />
-        <Route path='/playlist' element={<SinglePlaylist />} />
-        <Route path="/courses" element={<VideoCourse />} />
+        <Route path='/playlist/:playlistId' element={<SinglePlaylist />} />
+        <Route path="/video/:videoId" element={<VideoCourse />} />
         <Route path="/notes" element={<VideoNotes />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
     </>

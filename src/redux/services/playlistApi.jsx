@@ -14,7 +14,16 @@ export const playlistApi = createApi({
             }),
             providesTags: ['Playlist'],
         }),
+        videos: builder.query({
+            query: ({token, playlistId}) => ({
+                url: `/playlist/videos?id=${playlistId}`,
+                headers: {
+                    'x-auth-token': token
+                }
+            }),
+            providesTags: ['Playlist'],
+        }),
     }),
 });
 
-export const { usePlaylistQuery } = playlistApi;
+export const { usePlaylistQuery, useVideosQuery } = playlistApi;

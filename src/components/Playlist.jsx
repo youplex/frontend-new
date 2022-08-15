@@ -50,7 +50,7 @@ function Playlist({ header, sortType = '', searchTerm = '' }) {
       
         filteredData?.map((item, index) => {
             return (
-              <Link key={item._id} to="#">
+              <Link key={item._id} to={`/playlist/${item._id}`}>
                 <Card sx={{ width: 400 }}>
                   <CardMedia component="img" image={item.thumbnail} alt={item.title} />
                   <CardContent style={{ padding: 2 }}>
