@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { PlaylistData } from '../data';
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -77,13 +76,5 @@ function Playlist({ header, sortType = '', searchTerm = '' }) {
     </>
   );
 }
-
-// const Playlist = () => {
-//   return (
-//     <div className='ml-52'>
-//         <Card />
-//     </div>
-//   )
-// }
 
 export default Playlist;
