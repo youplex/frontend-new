@@ -7,3 +7,5 @@ export { default as playlistDashboard } from './PlaylistDashboard';
 export {default as SearchPlaylist } from './SearchPlaylist';
 export {default as Error} from './Error';
 export{default as SinglePlaylist} from './SinglePlaylist';
+export {default as VideoCourse} from './VideoCourse'
+export {default as VideoNotes} from './VideoNotes'
