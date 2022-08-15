@@ -20,9 +20,9 @@ function ProgressTracker({playlistData, isLoading}) {
       <div className="ml-52 my-5 text-xl font-medium">Progress Tracker</div>
       {isLoading ? <h1>Loading ...</h1> : 
         (
-        <div className="ml-52 card-wrapper">
-              {playlistData?.slice(0,4)?.map((item) => (
-                <Card key={item._id} title={item.title} videosCount={item.totalVideos} />
+        <div className="ml-52 card-wrapper"> 
+              {playlistData?.slice(0,4)?.map((item, index) => (
+                <Card key={item._id} title={item.title} videosCount={item.totalVideos} index={index} />
               ))}
         </div>
         )
