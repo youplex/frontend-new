@@ -30,7 +30,7 @@ function CreatePlaylist() {
         {
           navigate('/dashboard');
         }else{
-          console.log(data);
+          alert('error occured, try again');
         }
     } catch (error) {
         console.log(error);

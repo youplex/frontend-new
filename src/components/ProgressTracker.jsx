@@ -6,9 +6,9 @@ import Playlist from "./Playlist";
 import Card from '../components/Card';
 
 
-function ProgressTracker({playlistData, isLoading}) {
+function ProgressTracker({playlistData, isLoading, error}) {
   const labelStyles = "px-2 py-1 border-solid border rounded border-black cursor-pointer";
-  const activeLabelStyles = "bg-btn w-max text-white py-px px-2 py-1 rounded text-bold cursor-pointer";
+  const activeLabelStyles = "bg-btn w-max text-white px-2 py-1 rounded text-bold cursor-pointer";
   const [sortType, setSortType] = useState('date');
   const handleCheckBoxChange = (e) => {
     if(sortType === e.target.value) return;
@@ -18,7 +18,10 @@ function ProgressTracker({playlistData, isLoading}) {
   return (
     <>
       <div className="ml-52 my-5 text-xl font-medium">Progress Tracker</div>
-      {isLoading ? <h1>Loading ...</h1> : 
+      {(error && !isLoading) ?
+        <h1>Error Occured, try again</h1>
+      : null }
+      {(isLoading && !error) ? <h1>Loading ...</h1> : 
         (
         <div className="ml-52 card-wrapper"> 
               {playlistData?.slice(0,4)?.map((item, index) => (
@@ -37,7 +40,7 @@ function ProgressTracker({playlistData, isLoading}) {
         <input onChange={handleCheckBoxChange} type={'checkbox'} id='date' radioGroup='sort' value='date' className="hidden" />
         <label 
           htmlFor="alpha" 
-          className={sortType === 'alpha' ? activeLabelStyles :  labelStyles}
+          className={ sortType === 'alpha' ? activeLabelStyles :  labelStyles}
         >
           A-Z
         </label>

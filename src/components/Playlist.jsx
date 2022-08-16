@@ -45,7 +45,7 @@ function Playlist({ header, sortType = '', searchTerm = '' }) {
   return (
     <>
       <div className="ml-52 my-5 text-xl font-medium">{header}</div>
-      <div className="ml-52 min-w-max h-min grid grid-cols-2 gap-2 mb-4 ">
+      <div className="ml-52 min-w-max h-min grid grid-cols-2 gap-6 mb-4 ">
         {isLoading ? <h1>Loading ...</h1>  :
       
         filteredData?.map((item, index) => {
@@ -55,12 +55,12 @@ function Playlist({ header, sortType = '', searchTerm = '' }) {
                   <CardMedia component="img" image={item.thumbnail} alt={item.title} />
                   <CardContent style={{ padding: 2 }}>
                     <Typography variant="body1" color="text.secondary">
-                      <span
-                        style={{ fontSize: 14 }}
+                      <strong
+                        style={{ fontSize: 16 }}
                         className="flex justify-center"
                       >
-                        {item.title}
-                      </span>
+                        {item?.title?.length > 45 ? `${item?.title?.substring(0, 43)}...` : item?.title}
+                      </strong>
                     </Typography>
                   </CardContent>
                 </Card>
@@ -69,7 +69,7 @@ function Playlist({ header, sortType = '', searchTerm = '' }) {
           })
         }
         {
-          filteredData?.length === 0 && <h1>No results</h1>
+          (filteredData?.length && !isLoading) === 0 && <h1>No results</h1>
         }
       </div>
       <Sidebar />

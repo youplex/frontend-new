@@ -7,10 +7,10 @@ import '../../node_modules/draft-js/dist/Draft.css'
 class RichTextEditor extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {editorState: EditorState.createEmpty()};
+      this.state = {editorState: props.editorState};
 
       this.focus = () => this.refs.editor.focus();
-      this.onChange = (editorState) => this.setState({editorState});
+      this.onChange = (editorState) => {this.setState({editorState}); props.setEditorState(editorState)};
 
       this.handleKeyCommand = this._handleKeyCommand.bind(this);
       this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);

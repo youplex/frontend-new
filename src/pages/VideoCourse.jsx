@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Sidebar, VideoPlayer } from '../components';
 import {Navbar} from '../components';
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
+import { EditorState, convertToRaw } from 'draft-js';
 
 const VideoCourse = () => {
   const { token } = useSelector((state) => ({...state.auth}));
@@ -20,6 +21,12 @@ const VideoCourse = () => {
   const video = videos[videoIndex];
   const upcomingVideos = videos.slice(videoIndex + 1, videoIndex + 4);
 
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+      console.log(content);
+  }
     return (
         <>
         <Sidebar />
@@ -39,7 +46,14 @@ const VideoCourse = () => {
           </div>
   
           <div className="container w-4/5">
-            <RichTextEditor />
+            <form onSubmit={handleSubmit}>
+              <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
+              <div className='flex'>
+              <button className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
+                Submit
+              </button>
+              </div>
+            </form>
           </div>
         </div>
         <div className=" ml-48 flex justify-between mr-16 mt-4">
