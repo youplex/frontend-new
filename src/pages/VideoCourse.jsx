@@ -5,10 +5,11 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { RichTextEditor } from "../components";
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
-import { EditorState, convertToRaw } from 'draft-js';
+import { useVideoNotesQuery } from '../redux/services/noteApi';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import axios from 'axios';
 
 const VideoCourse = () => {
   const { token } = useSelector((state) => ({...state.auth}));
@@ -16,16 +17,32 @@ const VideoCourse = () => {
   const { videoId } = useParams();
   const playlist = searchParams.get('playlist');
   const { data: { videos = []} = {}} = useVideosQuery({token, playlistId: playlist});
+  const { data: notes = [] } = useVideoNotesQuery({ token, videoId });
 
   const videoIndex = videos.findIndex(vid => vid._id === videoId);
-  const video = videos[videoIndex];
+  const video = videos[videoIndex] || {};
   const upcomingVideos = videos.slice(videoIndex + 1, videoIndex + 4);
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-      console.log(content);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+     try {
+      const { data, status } = await axios.post('/note/create', { title :"Demo", content, timestamp: 10.50, noteFor: video._id }, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        console.log(data);
+      }
+     } catch (error) {
+        console.log(error);
+     }
+  }
+
+  const handleNoteShow = (note) => {
+    setEditorState(() => EditorState.createWithContent(convertFromRaw(JSON.parse(note?.content))));
   }
     return (
         <>
@@ -58,15 +75,26 @@ const VideoCourse = () => {
         </div>
         <div className=" ml-48 flex justify-between mr-16 mt-4">
           <div>
-            <h2 className="font-bold">{video.title}</h2>
+            <h2 className="font-bold">{video?.title}</h2>
             <p className='pr-4'>
-              {video.description?.length > 280 ? `${video.description.substring(0, 247)}...` : video.description }
+              {video?.description?.length > 280 ? `${video?.description.substring(0, 247)}...` : video?.description }
             </p>
           </div>
   
           <div className="bg-primary text-white h-max py-1 px-4 mr-1 rounded-lg">
             <Link to="/schedule">Schedule</Link>
           </div>
+        </div>
+
+        <div  className='ml-48 mt-4' >
+          <h1 className="font-bold">Notes</h1>
+          {notes?.map((note) => {
+            return (
+              <div className='cursor-pointer' onClick={() => handleNoteShow(note)} key={note._id}>
+                {note?.timestamp?.toFixed(2)}
+              </div>
+            )
+          })}
         </div>
   
         <div className="ml-48 mt-4">
@@ -80,8 +108,8 @@ const VideoCourse = () => {
             
             {upcomingVideos?.map((video) => {
                 return (
-                <div key={video._id} className="p-4 md:w-1/3 snap-center ">
-                <Link to={`/video/${video._id}?playlist=${playlist}`}>
+                <div key={video?._id} className="p-4 md:w-1/3 snap-center ">
+                <Link to={`/video/${video?._id}?playlist=${playlist}`}>
                   <div className="h-max border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                     <img
                       className="lg:h-48 md:h-36 w-full object-cover object-center"

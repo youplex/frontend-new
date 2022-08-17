@@ -233,6 +233,16 @@ p {
   color: #5890ff;
 }
 
+.RichEditor-editor h1, 
+.RichEditor-editor h2, 
+.RichEditor-editor h3, 
+.RichEditor-editor h4, 
+.RichEditor-editor h5, 
+.RichEditor-editor h6 {
+  font-size: revert;
+  font-weight: revert;
+} 
+
 
 @media screen and (max-width: 768px){
   .login-container{

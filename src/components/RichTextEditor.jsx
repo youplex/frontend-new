@@ -18,6 +18,10 @@ class RichTextEditor extends React.Component {
       this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
     }
 
+    UNSAFE_componentWillReceiveProps(props){
+        this.setState({editorState: props.editorState}); 
+    }
+
     _handleKeyCommand(command, editorState) {
       const newState = RichUtils.handleKeyCommand(editorState, command);
       if (newState) {
