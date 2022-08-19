@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Sidebar, VideoPlayer } from '../components';
 import {Navbar} from '../components';
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -16,8 +16,9 @@ const VideoCourse = () => {
   const [ searchParams ] = useSearchParams();
   const { videoId } = useParams();
   const playlist = searchParams.get('playlist');
+  const playerRef = useRef();
   const { data: { videos = []} = {}} = useVideosQuery({token, playlistId: playlist});
-  const { data: notes = [] } = useVideoNotesQuery({ token, videoId });
+  const { data: notes = [] , refetch} = useVideoNotesQuery({ token, videoId });
 
   const videoIndex = videos.findIndex(vid => vid._id === videoId);
   const video = videos[videoIndex] || {};
@@ -26,15 +27,47 @@ const VideoCourse = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+    const editorContent = convertToRaw(editorState.getCurrentContent());
+    if(!editorContent.blocks[0].text) return;
+    const content = JSON.stringify(editorContent);
+   
+    const timestamp = Math.floor(playerRef.current.getCurrentTime());
+    if(!timestamp) return;
      try {
-      const { data, status } = await axios.post('/note/create', { title :"Demo", content, timestamp: 10.50, noteFor: video._id }, {
+      const { data, status } = await axios.post('/note/create', { title :"Demo", content, timestamp, noteFor: video._id }, {
         headers: {
           'x-auth-token': token
         }, withCredentials: true
       });
       if(status == 200){
         console.log(data);
+        refetch();
+      }
+     } catch (error) {
+        console.log(error);
+     }
+  };
+
+  const handleUpdate = async () => {
+    const editorContent = convertToRaw(editorState.getCurrentContent());
+    if(!editorContent.blocks[0].text) return;
+    const content = JSON.stringify(editorContent);
+   
+    const timestamp = editMode?.timestamp;
+    const note_id = editMode?.note_id;
+
+    if(!timestamp || !note_id) return;
+    
+    try {
+      const { data, status } = await axios.put(`/note/${note_id}`, { title : "Demo", content, timestamp }, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        console.log(data);
+        refetch();
+        resetEditor();
       }
      } catch (error) {
         console.log(error);
@@ -42,8 +75,18 @@ const VideoCourse = () => {
   }
 
   const handleNoteShow = (note) => {
+    setEditMode({ timestamp: note.timestamp, note_id: note._id });
+    playerRef.current.seekTo(note.timestamp);
     setEditorState(() => EditorState.createWithContent(convertFromRaw(JSON.parse(note?.content))));
   }
+
+  const resetEditor = () => {
+    setEditorState(() => EditorState.createEmpty());
+    setEditMode(false);
+  }
+
+  const [editMode, setEditMode] = useState(false); // false or the time in seconds
+
     return (
         <>
         <Sidebar />
@@ -59,16 +102,27 @@ const VideoCourse = () => {
   
         <div className="flex  ml-48 max-h-max mr-12 ">
           <div className="container mr-5 max-h-max ">
-            <VideoPlayer videoId={video?.videoId} />
+            <VideoPlayer videoId={video?.videoId} playerRef={playerRef} />
           </div>
   
           <div className="container w-4/5">
             <form onSubmit={handleSubmit}>
               <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
               <div className='flex'>
-              <button className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
-                Submit
-              </button>
+                {editMode ?
+                <>
+                <button onClick={resetEditor} type='button' className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1'>
+                  Clear
+                </button>
+                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
+                  Update
+                </button>
+                </>
+                :
+                <button className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
+                  Submit
+                </button>
+                }
               </div>
             </form>
           </div>
@@ -90,9 +144,9 @@ const VideoCourse = () => {
           <h1 className="font-bold">Notes</h1>
           {notes?.map((note) => {
             return (
-              <div className='cursor-pointer' onClick={() => handleNoteShow(note)} key={note._id}>
-                {note?.timestamp?.toFixed(2)}
-              </div>
+              <span className='cursor-pointer' onClick={() => handleNoteShow(note)} key={note._id}>
+                {note?.timestamp?.toFixed(2)} <br/>
+              </span>
             )
           })}
         </div>

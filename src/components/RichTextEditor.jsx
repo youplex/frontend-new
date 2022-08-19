@@ -10,7 +10,7 @@ class RichTextEditor extends React.Component {
       this.state = {editorState: props.editorState};
 
       this.focus = () => this.refs.editor.focus();
-      this.onChange = (editorState) => {this.setState({editorState}); props.setEditorState(editorState)};
+      this.onChange = (editorState) => { /* this.setState({editorState}); */ props.setEditorState(editorState)};
 
       this.handleKeyCommand = this._handleKeyCommand.bind(this);
       this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
