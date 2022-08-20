@@ -173,8 +173,6 @@ p {
   padding: 15px;
   width:500px;
   margin-right:20px;
-  
-  
 }
 
 .RichEditor-editor {
@@ -185,12 +183,16 @@ p {
 }
 
 .RichEditor-editor .public-DraftEditorPlaceholder-root,
-.RichEditor-editor .public-DraftEditor-content {
+.RichEditor-editor .public-DraftEditor-content,
+.readonly-editor  .public-DraftEditorPlaceholder-root
+/* .readonly-editor  .public-DraftEditor-content */
+{
   margin: 0 -15px -15px;
   padding: 15px;
 }
 
-.RichEditor-editor .public-DraftEditor-content {
+.RichEditor-editor .public-DraftEditor-content
+ {
   min-height: 205px;
 }
 
@@ -198,7 +200,9 @@ p {
   display: none;
 }
 
-.RichEditor-editor .RichEditor-blockquote {
+.RichEditor-editor .RichEditor-blockquote,
+.readonly-editor .RichEditor-blockquote
+ {
   border-left: 5px solid #eee;
   color: #666;
   font-family: 'Hoefler Text', 'Georgia', serif;
@@ -207,7 +211,9 @@ p {
   padding: 10px 20px;
 }
 
-.RichEditor-editor .public-DraftStyleDefault-pre {
+.RichEditor-editor .public-DraftStyleDefault-pre,
+.readonly-editor .public-DraftStyleDefault-pre
+ {
   background-color: rgba(0, 0, 0, 0.05);
   font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
   font-size: 16px;
@@ -238,10 +244,21 @@ p {
 .RichEditor-editor h3, 
 .RichEditor-editor h4, 
 .RichEditor-editor h5, 
-.RichEditor-editor h6 {
+.RichEditor-editor h6,
+.readonly-editor h1, 
+.readonly-editor h2, 
+.readonly-editor h3, 
+.readonly-editor h4, 
+.readonly-editor h5, 
+.readonly-editor h6
+ {
   font-size: revert;
   font-weight: revert;
 } 
+
+.readonly-editor{
+  padding-bottom: -10px;
+}
 
 
 @media screen and (max-width: 768px){

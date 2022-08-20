@@ -28,13 +28,14 @@ const VideoCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const editorContent = convertToRaw(editorState.getCurrentContent());
-    if(!editorContent.blocks[0].text) return;
+    const title = editorContent.blocks[0].text; // setting first block as title
+    if(!title) return;
     const content = JSON.stringify(editorContent);
    
     const timestamp = Math.floor(playerRef.current.getCurrentTime());
     if(!timestamp) return;
      try {
-      const { data, status } = await axios.post('/note/create', { title :"Demo", content, timestamp, noteFor: video._id }, {
+      const { data, status } = await axios.post('/note/create', {title, content, timestamp, noteFor: video._id }, {
         headers: {
           'x-auth-token': token
         }, withCredentials: true
@@ -50,7 +51,8 @@ const VideoCourse = () => {
 
   const handleUpdate = async () => {
     const editorContent = convertToRaw(editorState.getCurrentContent());
-    if(!editorContent.blocks[0].text) return;
+    const title = editorContent.blocks[0].text; // setting first block as title
+    if(!title) return;
     const content = JSON.stringify(editorContent);
    
     const timestamp = editMode?.timestamp;
@@ -59,7 +61,7 @@ const VideoCourse = () => {
     if(!timestamp || !note_id) return;
     
     try {
-      const { data, status } = await axios.put(`/note/${note_id}`, { title : "Demo", content, timestamp }, {
+      const { data, status } = await axios.put(`/note/${note_id}`, { title, content, timestamp }, {
         headers: {
           'x-auth-token': token
         }, withCredentials: true

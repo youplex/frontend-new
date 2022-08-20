@@ -11,7 +11,7 @@ export const SidebarData = [
 
   {
     title: "Home",
-    path: "/home",
+    path: "/dashboard",
     icon: <Heroicons.HiOutlineHome size={22} />,
     cName: "sidebar-text",
   },

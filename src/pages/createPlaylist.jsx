@@ -12,14 +12,17 @@ function CreatePlaylist() {
 
   const handleCreatePlaylist = async (e) => {
     e.preventDefault();
+    const Ytdomain = 'www.youtube.com';
     const link = new URL(playlistURL);
     const listId= link?.searchParams?.get('list');
-    const matchesPlaylistPattern = listId?.startsWith('PL');
-    if(!matchesPlaylistPattern || link.hostname !== 'www.youtube.com')
+    const matchesPlaylistPattern = listId?.startsWith('PL') && Ytdomain.includes(link.hostname);
+
+    if(!matchesPlaylistPattern)
     {
       alert('Playlist link is incorrect, try again')
       return;
     }
+    
     try {
         const { data, status } = await axios.post('/playlist/create', { listId }, {
           headers: {
