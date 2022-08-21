@@ -13,7 +13,7 @@ function Footer() {
       <footer className="bg-footer">
         {/* Flex Container */}
         <div className="container flex px-6 py-4 mx-auto space-y-4  md:space-y-0 justify-center items-center text-white">
-          <p>Crework ❤️</p>
+          <p>Made by Team Youplex and Crework ❤️</p>
         </div>
       </footer>
     </>
