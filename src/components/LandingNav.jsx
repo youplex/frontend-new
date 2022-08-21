@@ -1,9 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LandingNav = () => {
   const { token } = useSelector((state) => ({ ...state.auth }));
+  const navigate = useNavigate();
+
+  if(token){
+    navigate('/dashboard');
+  }
 
   return (
     <>

@@ -27,16 +27,20 @@ function SinglePlaylist() {
           <Card sx={{ width: 4 / 5 }}>
             <CardMedia
               component="img"
-              image={playlist.thumbnail}
-              alt={playlist.title}
+              image={playlist?.thumbnail}
+              alt={playlist?.title}
             />
           </Card>
         </div>
         <div className="absolute right-60 top-22 w-80">
-          <h1 className="font-bold text-xl">{playlist.title}</h1>
-          <p>{playlist.description || "No description"}</p>
+          <h1 className="font-bold text-xl">{playlist?.title}</h1>
+          <p>{playlist?.description || "No description"}</p>
           <div className=" bg-primary w-max px-4 py-2 text-white rounded-md text-sm mt-4">
-            <Link to="#">Schedule</Link>
+            <Link 
+            to={`/schedule?summary=${playlist?.title}&description=Watch%20Playlist%20Link:%20${window.location.href}`}
+            >
+              Schedule
+            </Link>
           </div>
         </div>
       </div>

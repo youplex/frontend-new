@@ -30,6 +30,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
               title={item.title}
               videosCount={item.totalVideos}
               index={index}
+              completed={item.completedVideos}
             />
           ))}
         </div>

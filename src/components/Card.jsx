@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Card = ({ title, videosCount, index = 1 }) => {
+const Card = ({ title, videosCount, completed = 10, index = 1 }) => {
   let timer; // safe from closure
   const cardColors = [
     { bg: "#f3f1ff", completed: "#432fb3" },
@@ -8,7 +8,7 @@ const Card = ({ title, videosCount, index = 1 }) => {
     { bg: "#fffaec", completed: "#386900" },
     { bg: "#fde0e5", completed: "#a15965" },
   ];
-  const progressEndValue = (15 * (index + 1)) % 100;
+  const progressEndValue = Math.floor((completed / videosCount) * 100);
   const [progressValue, setProgressValue] = useState(0);
 
   useEffect(() => {
