@@ -9,7 +9,7 @@ function LandingFeatures() {
     <>
       <section id="features" style={{ overflowX: "hidden" }}>
         {/* Flex container */}
-        <div className="container flex flex-col px-4 mx-auto mt-10 space-y-0 md:space-y-0 md:flex-row justify-center">
+        <div className="container flex flex-col max-w-6xl px-4 mx-auto mt-10 space-y-0 md:space-y-0 md:flex-row justify-center">
           {/* Feature Image */}
           <div className="flex flex-col space-y-0 md:w-1/2">
             <img src={playlists} style={{ width: "60%" }} alt="" />
