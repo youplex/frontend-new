@@ -9,3 +9,4 @@ export {default as Error} from './Error';
 export{default as SinglePlaylist} from './SinglePlaylist';
 export {default as VideoCourse} from './VideoCourse'
 export {default as VideoNotes} from './VideoNotes'
+export {default as Scheduling} from './Scheduling'
