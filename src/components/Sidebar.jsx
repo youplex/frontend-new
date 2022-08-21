@@ -6,6 +6,7 @@ import { HiOutlinePlusCircle } from "react-icons/hi";
 import { IconContext } from "react-icons";
 // import './sidebar.css';
 
+
 function Sidebar() {
   return (
     <>
@@ -14,7 +15,7 @@ function Sidebar() {
           <ul className="sidebar-menu-items ">
             {SidebarData.map((item, index) => {
               return (
-                <li key={index} className=" h-max w-max p-3 mt-5 rounded-full">
+                <li key={index} className=" h-max w-max p-3 mt-5 rounded-full hover:bg-white hover:text-black">
                   <Link className="" to={item.path}>
                     {item.icon}
                   </Link>
