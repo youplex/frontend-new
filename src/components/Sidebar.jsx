@@ -15,9 +15,12 @@ function Sidebar() {
           <ul className="sidebar-menu-items ">
             {SidebarData.map((item, index) => {
               return (
-                <li key={index} className=" h-max w-max p-3 mt-5 rounded-full hover:bg-white hover:text-black">
-                  <Link className="" to={item.path}>
+                <li key={index} className=" h-max w-max p-3 mt-5 rounded-full hover-class ">
+                  <Link to={item.path}>
+                    <IconContext.Provider value={{}}>
+
                     {item.icon}
+                    </IconContext.Provider>
                   </Link>
                 </li>
               );
@@ -25,13 +28,20 @@ function Sidebar() {
           </ul>
 
           {/* Add playlist button */}
+            <div className="  flex  h-max w-max p-3   rounded-full justify-start items-center p-3 ">
+           
 
           <Link
-            className="flex  h-max w-max p-3 hover:bg-white rounded-full justify-start items-center p-3  "
+            className=" "
             to="/createplaylist"
           >
+            <IconContext.Provider value={{style:{color:'white'}}}>
+
             <HiOutlinePlusCircle size={22} />
+            </IconContext.Provider>
           </Link>
+            
+            </div>
         </nav>
       </IconContext.Provider>
     </>
