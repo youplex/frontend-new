@@ -7,14 +7,13 @@ import { convertFromRaw, Editor, EditorState } from 'draft-js';
 const styles = {
   width: "1125px",
   backgroundColor: "#ededed",
-  boxShadow:
-    " 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);",
-    marginTop:'20px',
-    
+  boxShadow: " 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);",
+  marginTop:'20px',
+  position: 'relative',  
   height:'max-content'
 };
 
-const convertSecToHMS = (time_in_seconds) => {
+export const convertSecToHMS = (time_in_seconds) => {
   let remainingSeconds = time_in_seconds; // initialize with total time
   const hours = Math.floor(remainingSeconds / (60 * 60));
   remainingSeconds = time_in_seconds % 3600; 

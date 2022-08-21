@@ -1,14 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { Sidebar, VideoPlayer } from '../components';
-import {Navbar} from '../components';
+import { Sidebar, VideoPlayer, Navbar, RichTextEditor } from '../components';
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { RichTextEditor } from "../components";
 import { useSelector } from 'react-redux';
-import { useSearchParams, useParams } from 'react-router-dom';
+import { useSearchParams, useParams, Link} from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
 import { useVideoNotesQuery } from '../redux/services/noteApi';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { convertSecToHMS } from '../components/Notes';
 import axios from 'axios';
 
 const VideoCourse = () => {
@@ -149,7 +147,7 @@ const VideoCourse = () => {
           {notes?.map((note) => {
             return (
               <span className='cursor-pointer' onClick={() => handleNoteShow(note)} key={note._id}>
-                {note?.timestamp?.toFixed(2)} <br/>
+                {convertSecToHMS(note?.timestamp)} - { note?.title} <br/>
               </span>
             )
           })}

@@ -10,7 +10,6 @@ axios.interceptors.response.use(resp => resp, async (error) => {
         const { data, status} = await axios.post('/auth/refresh', {}, { withCredentials: true });
         if(status === 200){
             store.dispatch(setToken(data.token));
-            isRetry = false;
             return axios(error.config);
         }
     }
