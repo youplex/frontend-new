@@ -8,8 +8,8 @@ function VideoPlayer({ videoId, playerRef }) {
       <ReactPlayer
         ref={playerRef}
         url={`https://www.youtube.com/watch?v=${videoId}`}
-        width="640px"
-        height="360px"
+        width="800px"
+        height="454px"
         controls={true}
       />
     </div>

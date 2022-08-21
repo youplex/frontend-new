@@ -14,9 +14,9 @@ function PlaylistDashboard() {
       <div className="search container flex justify-center items-center px-6 py-10 mx-auto space-y-8 md:flex-row md:space-y-0">
         <form action="#">
           <input type="text" placeholder=" Search Courses" name="search" />
-          <button style={{ fontSize: 24, marginLeft: "2rem" }}>
+          {/* <button style={{ fontSize: 24, marginLeft: "2rem" }}>
             <HiOutlinePlusCircle />
-          </button>
+          </button> */}
         </form>
       </div>
       <div className="flex justify-center md:justify-center">

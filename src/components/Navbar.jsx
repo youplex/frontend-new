@@ -10,12 +10,12 @@ function Navbar({ page }) {
       <div className="flex list-none px-2">
         <li className="px-4">
           <Link to="#">
-            <HiOutlineBell size={22} />
+            <HiOutlineBell size={28} />
           </Link>
         </li>
         <li className=" px-4">
           <Link to="/dashboard">
-            <HiOutlineUserCircle size={22} />
+            <HiOutlineUserCircle size={28} />
           </Link>
         </li>
       </div>
