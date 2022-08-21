@@ -1,8 +1,12 @@
 import Card from "@mui/material/Card";
-import { Link } from "react-router-dom";
+
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
-import { Fragment } from "react";
+
+import React,{ Fragment,useState,useRef,useEffect} from "react";
+
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
+// import { NotesData } from "../data";
+
 
 const styles = {
   width: "1125px",
@@ -12,7 +16,10 @@ const styles = {
     marginTop:'20px',
     
   height:'max-content'
+  
 };
+
+
 
 const convertSecToHMS = (time_in_seconds) => {
   let remainingSeconds = time_in_seconds; // initialize with total time
@@ -32,23 +39,61 @@ const convertSecToHMS = (time_in_seconds) => {
 }
 
 function Notes({ data = [] }) {
+
+  //ellipsis dropdown menu open/close.
+  const [open,setOpen]=useState(false);
+  let menuRef=useRef();
+
+useEffect(()=>{
+  let handler = (e)=>{
+    if(!menuRef.current.contains(e.target)){
+      setOpen(false);
+      console.log(menuRef.current);
+    }      
+  };
+
+  document.addEventListener("mousedown", handler);
+  
+
+  return() =>{
+    document.removeEventListener("mousedown", handler);
+  }
+
+}
+)
+
   return (
     <>
     {data?.map((note)=>{
       return(
         <Fragment key={note._id}>
-        <section className="text-gray-600 ml-52 body-font overflow-hidden" key={note.id}>
-        <Link to="#">
-          <Card sx={{ ...styles }}>
+        <section className="text-gray-600 ml-52 body-font overflow-hidden " key={note.id}>
+        
+        <Card sx={{ ...styles }}>
             {/* <CardMedia component="img" image={item.thumbnail} alt={item.title} /> */}
-            <div className="container flex justify-between px-8 py-2 ">
+            <div ref={menuRef} className="container  flex justify-between px-4 py-2 ">
               <h1 className="font-semibold text-xl">{note.title}</h1>
-              <button>
-                <IoEllipsisVerticalSharp />
-              </button>
+
+              
+              
+
+                <IoEllipsisVerticalSharp onClick={()=>{setOpen(!open)}} />
+              
+              <div className={`dropdown-menu ${open?'active':'inactive'}`}>
+                <ul>
+
+                <DropdownItem text={"Delete"}/>
+                
+                </ul>
+              </div>
+              
+
+
+              
 
               
             </div>
+
               <div className="flex px-8 pb-4 ">
 
                 <span className="mr-8  font-semibold">{convertSecToHMS(note.timestamp)}</span>
@@ -58,9 +103,10 @@ function Notes({ data = [] }) {
                     readOnly={true}
                   />
                 </div>
+                <div>{note.content}</div>
               </div>
           </Card>
-        </Link>
+        
       </section>
         </Fragment>
       )
@@ -70,4 +116,14 @@ function Notes({ data = [] }) {
   ); 
 }
 
+//dropdown items.
+
+function DropdownItem(props){
+  return(
+    <li className="list-none dropdown-item">
+      <button >{props.text}</button>
+
+    </li>
+  )
+}
 export default Notes;
