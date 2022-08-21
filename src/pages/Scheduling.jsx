@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams , useNavigate } from 'react-router-dom';
 import { DateTime,Navbar,Sidebar } from "../components";
 
+
 export default function Scheduling() {
   const { token } = useSelector((state) => ({...state.auth}));
   const [ searchParams ] = useSearchParams();
@@ -90,5 +91,5 @@ export default function Scheduling() {
     <button onClick={handleSchedule} className="ml-52 bg-primary  px-2 py-1 absolute top-80 rounded text-white" >Schedule</button>
     </div>
     </>
-  )
+  );
 }
