@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import DateTimePicker from 'react-datetime-picker';
 
-function DateTime() {
-    const [value, setValue]=useState(new Date());
-    // const [open,setOpen]=useState(false);
+function DateTime({ dateTime, setDateTime }) {
   return (
     <>
     <div>
         <DateTimePicker
-         onChange={setValue} 
-         value={value}
-         
-            isCalendarOpen={true}
-            isClockOpen={false}
-        
+          onChange={setDateTime} 
+          value={dateTime}
+          isCalendarOpen={true}
+          isClockOpen={false}
+          minDate={new Date()}
          />
     </div>
     </>

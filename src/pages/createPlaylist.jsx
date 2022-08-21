@@ -7,62 +7,69 @@ import { useNavigate } from "react-router";
 
 function CreatePlaylist() {
   const { user, token } = useSelector((state) => ({ ...state.auth }));
-  const [playlistURL, setPlaylistURL] = useState('');
+  const [playlistURL, setPlaylistURL] = useState("");
   const navigate = useNavigate();
 
   const handleCreatePlaylist = async (e) => {
     e.preventDefault();
-    const Ytdomain = 'www.youtube.com';
+    const Ytdomain = "www.youtube.com";
     const link = new URL(playlistURL);
-    const listId= link?.searchParams?.get('list');
-    const matchesPlaylistPattern = listId?.startsWith('PL') && Ytdomain.includes(link.hostname);
+    const listId = link?.searchParams?.get("list");
+    const matchesPlaylistPattern =
+      listId?.startsWith("PL") && Ytdomain.includes(link.hostname);
 
-    if(!matchesPlaylistPattern)
-    {
-      alert('Playlist link is incorrect, try again')
+    if (!matchesPlaylistPattern) {
+      alert("Playlist link is incorrect, try again");
       return;
     }
-    
+
     try {
-        const { data, status } = await axios.post('/playlist/create', { listId }, {
-          headers: {
-            'x-auth-token': token
-          }, withCredentials: true
-        });
-        if(status === 200)
+      const { data, status } = await axios.post(
+        "/playlist/create",
+        { listId },
         {
-          navigate('/dashboard');
-        }else{
-          alert('error occured, try again');
+          headers: {
+            "x-auth-token": token,
+          },
+          withCredentials: true,
         }
+      );
+      if (status === 200) {
+        navigate("/dashboard");
+      } else {
+        alert("error occured, try again");
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
       <Navbar page="Youplex" />
-      <div className="container flex flex-col-reverse  justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0 text-center ax-w-lg text-4xl font-bold text-center md:text-3xl">
+      <div className="container flex flex-col-reverse justify-center items-center px-6 py-6 mx-auto mt-2 space-y-8 md:flex-row md:space-y-0 text-center ax-w-lg text-4xl font-bold text-center md:text-3xl">
         <h1>
           Welcome {user?.name || "John"}, <br />
           Create a New Playlist!
         </h1>
       </div>
-      <div className="search container flex justify-center items-center px-6 py-10 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0">
+      <div className="search container flex justify-center items-center px-6 py-6 mx-auto mt-4 space-y-8 md:flex-row md:space-y-0">
         <form onSubmit={handleCreatePlaylist}>
-          <input type="url" placeholder=" Search Courses" name="search" required 
-            value={playlistURL} onChange={(e) => setPlaylistURL(e.target.value)}
-           />
-          <button style={{ fontSize: 24, marginLeft: "2rem" }}>
+          <input
+            type="url"
+            placeholder=" Enter Playlist URL"
+            name="search"
+            required
+            value={playlistURL}
+            onChange={(e) => setPlaylistURL(e.target.value)}
+          />
+          <button className="text-3xl mx-6 align-middle	">
             <HiOutlinePlusCircle />
           </button>
-          <div className="flex justify-center mt-8">
-          <button
-            className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700"
-          >
-            Generate Playlist
-          </button>
+          <div className="flex justify-center mt-6">
+            <button className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700">
+              Generate Playlist
+            </button>
           </div>
         </form>
       </div>
@@ -74,11 +81,7 @@ function CreatePlaylist() {
           Generate Playlist
         </a>
       </div> */}
-      <svg
-        className="mt-10"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1440 320"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path
           fill="#07319B"
           fillOpacity={1}

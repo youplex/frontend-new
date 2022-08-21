@@ -64,10 +64,10 @@ function Login() {
   return (
     <div className="App">
       <section className="text-bg">
-        <div className="login-container container mx-auto flex px-2 py-10 md:flex-row flex-col items-center">
-          <div className="lg:max-w-full lg:w-full md:w-1/2 w-5/6 max-w-2xl">
+        <div className="login-container container mx-auto flex px-2 py-10 md:flex-row flex-col items-center max-h-screen">
+          <div className="w-3/5">
             <img
-              className="object-cover object-center rounded md-w-3/6 
+              className="object-cover object-center rounded w-4/6
               "
               alt="hero"
               src={loginhero}
@@ -75,10 +75,7 @@ function Login() {
           </div>
           <div className="login-action-box lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center sm-mr-16">
             <h1 className="sm:text-5xl md-text-5xl mb-8 font-bold text-bg text-3xl">
-
-
-              Create Your First &nbsp;
-
+              Create Your First
               <br className="hidden lg:inline-block" />
               Distraction Free Playlist
             </h1>

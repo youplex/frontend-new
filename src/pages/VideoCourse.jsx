@@ -138,7 +138,9 @@ const VideoCourse = () => {
           </div>
   
           <div className="bg-primary text-white h-max py-1 px-4 mr-1 rounded-lg">
-            <Link to="/schedule">Schedule</Link>
+            <Link 
+            to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
+            >Schedule</Link>
           </div>
         </div>
 

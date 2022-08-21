@@ -1,13 +1,19 @@
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LandingNav = () => {
-  const { token } = useSelector((state) => ({...state.auth}));
+  const { token } = useSelector((state) => ({ ...state.auth }));
+  const navigate = useNavigate();
+
+  if(token){
+    navigate('/dashboard');
+  }
 
   return (
     <>
-      <nav className="relative container mx-auto p-6">
+      <nav className="relative container max-w-6xl mx-auto p-6">
         {/* Flex container */}
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -24,22 +30,21 @@ const LandingNav = () => {
             </a>
           </div>
           {/* Button */}
-          {token 
-            ?
+          {token ? (
             <NavLink
-            to={"/dashboard"}
-            className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
-          >
-            Visit Dashboard
-          </NavLink>
-          :
-          <NavLink
-            to={"/login"}
-            className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
-          >
-            Login
-          </NavLink>
-          }
+              to={"/dashboard"}
+              className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
+            >
+              Visit Dashboard
+            </NavLink>
+          ) : (
+            <NavLink
+              to={"/login"}
+              className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
+            >
+              Login
+            </NavLink>
+          )}
           {/* Hamburger Icon */}
           <button
             id="menu-btn"
