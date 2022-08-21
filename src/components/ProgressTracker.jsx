@@ -19,7 +19,7 @@ function ProgressTracker({playlistData, isLoading, error}) {
     <>
       <div className="ml-52 my-5 text-xl font-medium">Progress Tracker</div>
       {(error && !isLoading) ?
-        <h1>Error Occured, try again</h1>
+        <h1 className="ml-52">Error Occured, try again</h1>
       : null }
       {(isLoading && !error) ? <h1>Loading ...</h1> : 
         (
