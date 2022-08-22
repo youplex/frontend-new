@@ -1,6 +1,4 @@
-import { Navbar, ProgressTracker, Sidebar } from '../components';
-
-import{Card} from '../components';
+import { Navbar, ProgressTracker, Sidebar, Loader } from '../components';
 import { useSelector } from "react-redux";
 import { usePlaylistQuery } from '../redux/services/playlistApi';
 
@@ -13,7 +11,11 @@ const Dashboard = () => {
     <>
       <Navbar page="User Profile" />
       <Sidebar />
-      <ProgressTracker {...{playlistData, isLoading, error}} />
+      {isLoading ? 
+        <Loader message="Fetching your playlist" /> 
+      :
+        <ProgressTracker {...{playlistData, isLoading, error}} />
+      }
       {/* <SearchBar placeholder="Quick Search..."/> */}
       {/* <VideoPlayer /> */}
     </>

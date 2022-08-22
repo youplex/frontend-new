@@ -1,18 +1,16 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { Navbar } from "../components";
-import { Sidebar } from "../components";
+import { Loader, Navbar, Sidebar } from "../components";
 import React from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import { useVideosQuery } from "../redux/services/playlistApi";
 import { useSelector } from "react-redux";
 
 function SinglePlaylist() {
   const { token } = useSelector((state) => ({ ...state.auth }));
   const { playlistId } = useParams();
-  const { data: { playlist = {}, videos = [] } = {} } = useVideosQuery({
+  const { data: { playlist = {}, videos = [] } = {}, isLoading } = useVideosQuery({
     token,
     playlistId,
   });
@@ -38,17 +36,13 @@ function SinglePlaylist() {
 
           {/* <div class="bg-cover bg-center " style="background-image: url(`${playlist?.thumbnail}`)"></div> */}
         </div>
-
-        <div className="top-20 w-3/5  ">
-          <h1 className="font-semibold text-2xl leading-10">
-            {playlist?.title}
-          </h1>
-          <p className="mt-4 whitespace-normal break-all ">
-            {playlist?.description || "No description"}
-          </p>
-          <div className=" bg-primary w-max px-4 py-2 text-white rounded-md text-md mt-8">
-            <Link
-              to={`/schedule?summary=${playlist?.title}&description=Watch%20Playlist%20Link:%20${window.location.href}`}
+        <div className="absolute right-60 top-22 w-80">
+          <h1 className="font-bold text-xl">{playlist?.title}</h1>
+          {isLoading && <Loader message="Fetching playlists"/>}
+          <p>{playlist?.description || "No description"}</p>
+          <div className=" bg-primary w-max px-4 py-2 text-white rounded-md text-sm mt-4">
+            <Link 
+            to={`/schedule?summary=${playlist?.title}&description=Watch%20Playlist%20Link:%20${window.location.href}`}
             >
               Schedule
             </Link>
@@ -60,6 +54,7 @@ function SinglePlaylist() {
         Videos in this playlist
       </div>
       <div className="ml-52 mb-10">
+        {isLoading && <Loader />}
         {videos?.map((item, index) => {
           return (
             <Card

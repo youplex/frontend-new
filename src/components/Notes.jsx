@@ -71,29 +71,14 @@ useEffect(()=>{
             {/* <CardMedia component="img" image={item.thumbnail} alt={item.title} /> */}
             <div ref={menuRef} className="container  flex justify-between px-4 py-2 ">
               <h1 className="font-semibold text-xl">{note.title}</h1>
-
-              
-              
-
                 <IoEllipsisVerticalSharp onClick={()=>{setOpen(!open)}} />
-              
               <div className={`dropdown-menu ${open?'active':'inactive'}`}>
                 <ul>
-
                 <DropdownItem text={"Delete"}/>
-                
                 </ul>
               </div>
-              
-
-
-              
-
-              
             </div>
-
               <div className="flex px-8 pb-4 ">
-
                 <span className="mr-8  font-semibold">{convertSecToHMS(note.timestamp)}</span>
                 <div className="readonly-editor" >
                   <Editor 
@@ -101,7 +86,6 @@ useEffect(()=>{
                     readOnly={true}
                   />
                 </div>
-                <div>{note.content}</div>
               </div>
           </Card>
         
