@@ -16,7 +16,7 @@ const VideoCourse = () => {
   const { videoId } = useParams();
   const playlist = searchParams.get('playlist');
   const playerRef = useRef();
-  const { data: { videos = []} = {}} = useVideosQuery({token, playlistId: playlist});
+  const { data: { videos = []} = {}, refetch: videoRefetch} = useVideosQuery({token, playlistId: playlist});
   const { data: notes = [] , refetch} = useVideoNotesQuery({ token, videoId });
 
   const videoIndex = videos.findIndex(vid => vid._id === videoId);
@@ -88,6 +88,28 @@ const VideoCourse = () => {
 
   const [editMode, setEditMode] = useState(false); // false or the time in seconds
 
+  const handleVideoDone = async () => {
+    const { title, description, completed } = video;
+
+      try {
+        const { data, status } = await axios.put(`/video/${video._id}`, { 
+          title, description, completed: !completed 
+        }, { 
+          headers: {
+            'x-auth-token': token
+        }, withCredentials: true 
+        });
+
+        if(status == 200){
+          videoRefetch()
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
+  const [isReadMore, setReadMore] = useState(false);
     return (
         <>
         
@@ -109,38 +131,48 @@ const VideoCourse = () => {
           <div className="container w-4/5">
             <form onSubmit={handleSubmit}>
               <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
-              <div className='flex'>
-                {/* {editMode ?
+              <div className='flex mx-28'>
+                {editMode ?
                 <>
-                <button onClick={resetEditor} type='button' className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1'>
-                  Clear
+                <button onClick={resetEditor} type='button' className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2'>
+                  Clear Editor
                 </button>
-                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
-                  Update
+                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2 ml-auto'>
+                  Update Note
                 </button>
                 </>
                 :
-                <button className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
-                  Submit
+                <button className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2 ml-auto'>
+                  Save Note
                 </button>
-                } */}
+                }
               </div>
             </form>
           </div>
         </div>
+
+        <div className="flex mx-24 mt-2">
+          <div className="bg-primary text-white h-max px-4 py-1 text-md rounded-md">
+              <Link 
+              to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
+              >Schedule</Link>
+          </div>
+          <button onClick={handleVideoDone} className="bg-emerald-600 text-white h-max px-4 py-1 text-md rounded-md ml-16">
+              Mark as {video?.completed && 'Not'} Done
+          </button>
+        </div>
+
         <div className=" description-width mx-24 flex  justify-between  mt-8">
           <div className='flex flex-col'>
 
             <h2 className="font-bold mb-2">{video?.title}</h2>
-            <p className=''>
-              {video?.description?.length > 240 ? `${video?.description.substring(0, 239)}...` : video?.description }
+            <p className='max-w-3xl'>
+              {isReadMore ?
+                video?.description
+              :
+                video?.description?.length > 240 ? `${video?.description.substring(0, 239)}...` : video?.description 
+              } <button onClick={() => setReadMore(prev => !prev)} className='text-blue-500'>Read {isReadMore ? 'Less' : 'More'}</button>
             </p>
-          </div>
-  
-          <div className="bg-primary text-white h-max px-4 py-1 text-md rounded-md">
-            <Link 
-            to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
-            >Schedule</Link>
           </div>
         </div>
 
@@ -154,7 +186,7 @@ const VideoCourse = () => {
             )
           })}
         </div> */}
-  
+       
         <div className="ml-24 mt-4">
           <h2 className="font-bold">Upcoming Videos</h2>
         </div>
@@ -162,7 +194,7 @@ const VideoCourse = () => {
         {/* Carousel */}
         <section className="text-gray-600 body-font">
           <div className=" ml-24 mr-12  py-2 ">
-            <div className="flex">
+            <div className="flex mb-10">
             
             {upcomingVideos?.map((video) => {
                 return (
