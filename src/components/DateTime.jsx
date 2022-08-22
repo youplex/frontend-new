@@ -1,20 +1,20 @@
-import React from 'react';
-import DateTimePicker from 'react-datetime-picker';
+import React from "react";
+import DateTimePicker from "react-datetime-picker";
 
 function DateTime({ dateTime, setDateTime }) {
   return (
     <>
-    <div>
+      <div className="bg-white rounded text-base outline-none text-gray-700 py-2  mt-2 leading-8 transition-colors duration-200 ease-in-out">
         <DateTimePicker
-          onChange={setDateTime} 
+          onChange={setDateTime}
           value={dateTime}
-          isCalendarOpen={true}
+          isCalendarOpen={false}
           isClockOpen={false}
           minDate={new Date()}
-         />
-    </div>
+        />
+      </div>
     </>
-  )
+  );
 }
 
-export default DateTime
+export default DateTime;

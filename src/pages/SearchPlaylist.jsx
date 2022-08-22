@@ -16,7 +16,7 @@ const SearchPlaylist = () => {
         <form onSubmit={(e) => e.preventDefault()} className="w-full">
           <div className="relative">
             <input
-              className="ml-52 pl-2 py-1 border-solid border-2 border-black w-9/12 rounded-lg	"
+              className="ml-52 pl-2 py-1 w-9/12 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 mt-2 leading-8 transition-colors duration-200 ease-in-out"
               type="text"
               placeholder=" Search Playlist"
               name="search"
