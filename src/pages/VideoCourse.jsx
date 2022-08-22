@@ -6,6 +6,7 @@ import { useSearchParams, useParams, Link} from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
 import { useVideoNotesQuery } from '../redux/services/noteApi';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { HiArrowNarrowLeft } from "react-icons/hi";
 import { convertSecToHMS } from '../components/Notes';
 import axios from 'axios';
 
@@ -15,7 +16,7 @@ const VideoCourse = () => {
   const { videoId } = useParams();
   const playlist = searchParams.get('playlist');
   const playerRef = useRef();
-  const { data: { videos = []} = {}} = useVideosQuery({token, playlistId: playlist});
+  const { data: { videos = []} = {}, refetch: videoRefetch} = useVideosQuery({token, playlistId: playlist});
   const { data: notes = [] , refetch} = useVideoNotesQuery({ token, videoId });
 
   const videoIndex = videos.findIndex(vid => vid._id === videoId);
@@ -87,62 +88,95 @@ const VideoCourse = () => {
 
   const [editMode, setEditMode] = useState(false); // false or the time in seconds
 
+  const handleVideoDone = async () => {
+    const { title, description, completed } = video;
+
+      try {
+        const { data, status } = await axios.put(`/video/${video._id}`, { 
+          title, description, completed: !completed 
+        }, { 
+          headers: {
+            'x-auth-token': token
+        }, withCredentials: true 
+        });
+
+        if(status == 200){
+          videoRefetch()
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
+  const [isReadMore, setReadMore] = useState(false);
     return (
         <>
-        <Sidebar />
-        <div>
+        
+        <div >
           <Link to="/home">
-            <div className=" absolute top-8 left-44 max-h-full ">
-              <AiOutlineArrowLeft />
+            <div className=" absolute top-4 left-24  max-h-full ">
+              <HiArrowNarrowLeft  size={28}/>
             </div>
           </Link>
   
-          <Navbar page="Go Back to Playlists" />
+          <Navbar page={null} />
         </div>
   
-        <div className="flex  ml-48 max-h-max mr-12 ">
-          <div className="container mr-5 max-h-max ">
+        <div className="flex   ml-24  ">
+          <div className="container border-opacity-60 overflow-clip rounded-lg max-h-max ">
             <VideoPlayer videoId={video?.videoId} playerRef={playerRef} />
           </div>
   
           <div className="container w-4/5">
             <form onSubmit={handleSubmit}>
               <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
-              <div className='flex'>
+              <div className='flex mx-28'>
                 {editMode ?
                 <>
-                <button onClick={resetEditor} type='button' className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1'>
-                  Clear
+                <button onClick={resetEditor} type='button' className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2'>
+                  Clear Editor
                 </button>
-                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
-                  Update
+                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2 ml-auto'>
+                  Update Note
                 </button>
                 </>
                 :
-                <button className='bg-primary text-white h-max py-2 px-5 mr-8 rounded-lg mt-1 ml-auto'>
-                  Submit
+                <button className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2 ml-auto'>
+                  Save Note
                 </button>
                 }
               </div>
             </form>
           </div>
         </div>
-        <div className=" ml-48 flex justify-between mr-16 mt-4">
-          <div>
-            <h2 className="font-bold">{video?.title}</h2>
-            <p className='pr-4'>
-              {video?.description?.length > 280 ? `${video?.description.substring(0, 247)}...` : video?.description }
-            </p>
+
+        <div className="flex mx-24 mt-2">
+          <div className="bg-primary text-white h-max px-4 py-1 text-md rounded-md">
+              <Link 
+              to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
+              >Schedule</Link>
           </div>
-  
-          <div className="bg-primary text-white h-max py-1 px-4 mr-1 rounded-lg">
-            <Link 
-            to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
-            >Schedule</Link>
+          <button onClick={handleVideoDone} className="bg-emerald-600 text-white h-max px-4 py-1 text-md rounded-md ml-16">
+              Mark as {video?.completed && 'Not'} Done
+          </button>
+        </div>
+
+        <div className=" description-width mx-24 flex  justify-between  mt-8">
+          <div className='flex flex-col'>
+
+            <h2 className="font-bold mb-2">{video?.title}</h2>
+            <p className='max-w-3xl'>
+              {isReadMore ?
+                video?.description
+              :
+                video?.description?.length > 240 ? `${video?.description.substring(0, 239)}...` : video?.description 
+              } <button onClick={() => setReadMore(prev => !prev)} className='text-blue-500'>Read {isReadMore ? 'Less' : 'More'}</button>
+            </p>
           </div>
         </div>
 
-        <div  className='ml-48 mt-4' >
+        {/* <div  className='ml-24 mt-4' >
           <h1 className="font-bold">Notes</h1>
           {notes?.map((note) => {
             return (
@@ -151,22 +185,22 @@ const VideoCourse = () => {
               </span>
             )
           })}
-        </div>
-  
-        <div className="ml-48 mt-4">
+        </div> */}
+       
+        <div className="ml-24 mt-4">
           <h2 className="font-bold">Upcoming Videos</h2>
         </div>
   
         {/* Carousel */}
         <section className="text-gray-600 body-font">
-          <div className=" ml-48 mr-12 px-5 py-12 ">
-            <div className="flex  -m-4 snap-x">
+          <div className=" ml-24 mr-12  py-2 ">
+            <div className="flex mb-10">
             
             {upcomingVideos?.map((video) => {
                 return (
-                <div key={video?._id} className="p-4 md:w-1/3 snap-center ">
+                <div key={video?._id} className=" md:w-1/3 mr-4  snap-center ">
                 <Link to={`/video/${video?._id}?playlist=${playlist}`}>
-                  <div className="h-max border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                  <div className="h-max  border-2 border-gray-200 border-opacity-60 rounded-lg overflow-clip">
                     <img
                       className="lg:h-48 md:h-36 w-full object-cover object-center"
                       src={video?.thumbnail || "https://dummyimage.com/720x400"}

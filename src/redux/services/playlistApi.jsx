@@ -13,6 +13,7 @@ export const playlistApi = createApi({
                 }
             }),
             providesTags: ['Playlist'],
+            keepUnusedDataFor: 5
         }),
         videos: builder.query({
             query: ({token, playlistId}) => ({

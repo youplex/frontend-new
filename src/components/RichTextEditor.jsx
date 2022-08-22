@@ -95,7 +95,7 @@ class RichTextEditor extends React.Component {
               handleKeyCommand={this.handleKeyCommand}
               keyBindingFn={this.mapKeyToEditorCommand}
               onChange={this.onChange}
-              placeholder="Tell a story..."
+              placeholder="Start writing your notes..., First line is title"
               ref="editor"
               spellCheck={true}
             />
