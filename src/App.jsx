@@ -18,7 +18,7 @@ import {
   Scheduling,
   Privacy
 } from "./pages";
-import { Footer } from "./components";
+import { Footer, PrivateRoute } from "./components";
 import PlaylistDashboard from "./pages/PlaylistDashboard";
 
 function App() {
@@ -50,13 +50,13 @@ function App() {
         <Route path="/home" element={<UserHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createplaylist" element={<CreatePlaylist />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/playlistDashboard" element={<PlaylistDashboard />} />
-        <Route  path="/search" element={<SearchPlaylist />}/>
+        <Route  path="/search" element={<PrivateRoute><SearchPlaylist /></PrivateRoute>}/>
         <Route path="/schedule" element={<Scheduling />} />
         <Route path='/playlist/:playlistId' element={<SinglePlaylist />} />
-        <Route path="/video/:videoId" element={<VideoCourse />} />
-        <Route path="/notes" element={<VideoNotes />} />
+        <Route path="/video/:videoId" element={<PrivateRoute><VideoCourse /></PrivateRoute>} />
+        <Route path="/notes" element={<PrivateRoute><VideoNotes /></PrivateRoute>} />
         <Route path='/privacy' element={<Privacy />}/>
         <Route path="*" element={<Error />} />
       </Routes>

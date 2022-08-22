@@ -58,7 +58,7 @@ export default function Scheduling() {
     <>
       <Navbar page="Schedule" />
       <Sidebar />
-      <div class="lg:w-9/12 bg-gray-100 rounded-lg p-8 flex flex-col w-full mt-10 ml-52">
+      <div className="lg:w-9/12 bg-gray-100 rounded-lg p-8 flex flex-col w-full mt-10 ml-52">
         <div className="">
           <div className="">
             <label htmlFor="" className="font-medium">

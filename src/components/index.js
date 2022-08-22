@@ -14,3 +14,4 @@ export {default as VideoPlayer} from './VideoPlayer'
 export {default as Notes} from './Notes'
 export { default as DateTime } from './DateTime'
 export { default as Loader } from './Loader'
+export { default as PrivateRoute } from './PrivateRoute';

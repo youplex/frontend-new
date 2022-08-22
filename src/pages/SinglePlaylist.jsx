@@ -1,19 +1,36 @@
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import { Loader, Navbar, Sidebar } from "../components";
-import React from "react";
-import { Link, useParams} from "react-router-dom";
+import { Link, useParams, useNavigate} from "react-router-dom";
 import { useVideosQuery } from "../redux/services/playlistApi";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 function SinglePlaylist() {
   const { token } = useSelector((state) => ({ ...state.auth }));
   const { playlistId } = useParams();
+  const navigate = useNavigate();
   const { data: { playlist = {}, videos = [] } = {}, isLoading } = useVideosQuery({
     token,
     playlistId,
   });
+
+  const handleDelete = async () => {
+    try {
+      const { data, status } =  await axios.delete(`/playlist/${playlistId}`, { 
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status === 200){
+        navigate('/dashboard');
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -21,31 +38,24 @@ function SinglePlaylist() {
       <Navbar page="Your Playlist" />
 
       <div className="ml-52 mt-4 flex   w-4/5">
-        {/* <div>
-          <Card sx={{ width: '400px'  }}>
-            <CardMedia
-              component="img"
-              image={playlist?.thumbnail}
-              alt={playlist?.title}
-            />
-          </Card>
-        </div> */}
 
         <div className="rounded-lg  mr-8 ">
           <img alt="content" className=" h-full " src={playlist?.thumbnail} />
-
-          {/* <div class="bg-cover bg-center " style="background-image: url(`${playlist?.thumbnail}`)"></div> */}
         </div>
+        
         <div className="absolute right-60 top-22 w-80">
           <h1 className="font-bold text-xl">{playlist?.title}</h1>
           {isLoading && <Loader message="Fetching playlists"/>}
           <p>{playlist?.description || "No description"}</p>
+          <div className="flex justify-between">
           <div className=" bg-primary w-max px-4 py-2 text-white rounded-md text-sm mt-4">
             <Link 
             to={`/schedule?summary=${playlist?.title}&description=Watch%20Playlist%20Link:%20${window.location.href}`}
             >
               Schedule
             </Link>
+          </div>
+            <button onClick={handleDelete} className="bg-red-600 w-max px-4 py-2 text-white rounded-md text-sm mt-4" >Delete</button>
           </div>
         </div>
       </div>

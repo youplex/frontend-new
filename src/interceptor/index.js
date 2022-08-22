@@ -14,5 +14,5 @@ axios.interceptors.response.use(resp => resp, async (error) => {
         }
     }
     isRetry = false;
-    return error;
+    return error?.response ? error.response.data: error;
 })

@@ -21,7 +21,11 @@ function Login() {
       );
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));
-      navigate("/createplaylist");
+      if(data.new){
+        navigate("/createplaylist");
+      }else{
+        navigate('/dashboard');
+      }
     } catch (error) {
       alert("Login error");
       console.log(error);
