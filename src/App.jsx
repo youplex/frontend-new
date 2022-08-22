@@ -15,7 +15,8 @@ import {
   SinglePlaylist,
   VideoCourse,
   VideoNotes,
-  Scheduling
+  Scheduling,
+  Privacy
 } from "./pages";
 import { Footer } from "./components";
 import PlaylistDashboard from "./pages/PlaylistDashboard";
@@ -56,6 +57,7 @@ function App() {
         <Route path='/playlist/:playlistId' element={<SinglePlaylist />} />
         <Route path="/video/:videoId" element={<VideoCourse />} />
         <Route path="/notes" element={<VideoNotes />} />
+        <Route path='/privacy' element={<Privacy />}/>
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
