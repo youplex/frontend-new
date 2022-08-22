@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams, useParams, Link} from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
 import { useVideoNotesQuery } from '../redux/services/noteApi';
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw, Editor } from 'draft-js';
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { convertSecToHMS } from '../components/Notes';
 import axios from 'axios';
@@ -17,7 +17,7 @@ const VideoCourse = () => {
   const playlist = searchParams.get('playlist');
   const playerRef = useRef();
   const { data: { videos = []} = {}, refetch: videoRefetch} = useVideosQuery({token, playlistId: playlist});
-  const { data: notes = [] , refetch} = useVideoNotesQuery({ token, videoId });
+  const { data: notes = [] , refetch: noteRefetch } = useVideoNotesQuery({ token, videoId });
 
   const videoIndex = videos.findIndex(vid => vid._id === videoId);
   const video = videos[videoIndex] || {};
@@ -41,7 +41,8 @@ const VideoCourse = () => {
       });
       if(status == 200){
         console.log(data);
-        refetch();
+        noteRefetch();
+        setReadOnly(true);
       }
      } catch (error) {
         console.log(error);
@@ -67,8 +68,9 @@ const VideoCourse = () => {
       });
       if(status == 200){
         console.log(data);
-        refetch();
+        noteRefetch();
         resetEditor();
+        setReadOnly(true);
       }
      } catch (error) {
         console.log(error);
@@ -76,9 +78,25 @@ const VideoCourse = () => {
   }
 
   const handleNoteShow = (note) => {
+    setReadOnly(false);
     setEditMode({ timestamp: note.timestamp, note_id: note._id });
     playerRef.current.seekTo(note.timestamp);
     setEditorState(() => EditorState.createWithContent(convertFromRaw(JSON.parse(note?.content))));
+  }
+
+  const handleDeleteNote = async (note) => {
+    try {
+      const {data, status} = await axios.delete(`/note/${note._id}`, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        noteRefetch();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const resetEditor = () => {
@@ -87,6 +105,7 @@ const VideoCourse = () => {
   }
 
   const [editMode, setEditMode] = useState(false); // false or the time in seconds
+  const [readOnly, setReadOnly] = useState(false);
 
   const handleVideoDone = async () => {
     const { title, description, completed } = video;
@@ -123,31 +142,75 @@ const VideoCourse = () => {
           <Navbar page={null} />
         </div>
   
-        <div className="flex   ml-24  ">
+        <div className="flex ml-24">
           <div className="container border-opacity-60 overflow-clip rounded-lg max-h-max ">
             <VideoPlayer videoId={video?.videoId} playerRef={playerRef} />
           </div>
   
           <div className="container w-4/5">
+            {readOnly ?
+            <div className="">
+                <div style={{ background: 'whitesmoke', overflowY: 'scroll', height: '421px' , maxHeight: "421px", width: '396px'}}>
+              {notes.length < 1 && 
+                <p className='p-4 text-lg'>
+                  Create a note to view it <br />
+                  No notes to see
+                </p>}
+              {
+                notes?.map((note) => {
+                  return (
+                  <div key={note._id} className='bg-gray-200 mb-1' style={{  padding: '10px', marginLeft:'10px', maxHeight: '421px'}}>
+                    <strong>{note.title} - {convertSecToHMS(note.timestamp)}</strong>
+                    <div className="readonly-editor" >
+                      <Editor 
+                        editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(note.content)))} 
+                        readOnly={true}
+                      />
+                    </div>
+                    <div className="flex justify-end">
+                      <button 
+                        onClick={() => handleNoteShow(note)}
+                        className='text-blue-700 border border-1 border-black rounded-md p-1 px-2'
+                      >Edit
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteNote(note)}
+                        className='text-red-700 ml-5 border border-1 border-black rounded-md p-1 px-2'
+                      >Delete
+                      </button>
+                    </div>
+                  </div>
+                  )
+                })
+              }
+            </div>
+            <div className="flex" style={{ width: '396px' }}>
+              <button onClick={() => setReadOnly(false)} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                Back to Editor
+              </button>
+            </div>
+            </div>
+            :
             <form onSubmit={handleSubmit}>
-              <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
-              <div className='flex mx-28'>
-                {editMode ?
-                <>
-                <button onClick={resetEditor} type='button' className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2'>
-                  Clear Editor
-                </button>
-                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2 ml-auto'>
-                  Update Note
-                </button>
-                </>
-                :
-                <button className='bg-primary text-white h-max py-1 px-4 mr-8 rounded-lg mt-2 ml-auto'>
-                  Save Note
-                </button>
-                }
-              </div>
-            </form>
+            <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
+            <div className='flex' style={{ width: '396px' }}>
+              {editMode ?
+              <>
+              <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                Update Note
+              </button>
+              <button type='button' onClick={() => {resetEditor(); setReadOnly(false)}} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                Back to Editor
+              </button>
+              </>
+              :
+              <button className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                Save Note
+              </button>
+              }
+            </div>
+          </form>
+            }
           </div>
         </div>
 
@@ -157,7 +220,10 @@ const VideoCourse = () => {
               to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
               >Schedule</Link>
           </div>
-          <button onClick={handleVideoDone} className="bg-emerald-600 text-white h-max px-4 py-1 text-md rounded-md ml-16">
+          <button onClick={() => setReadOnly(true)} className={`bg-primary text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
+              View Saved Notes
+          </button>
+          <button onClick={handleVideoDone} className={`${video?.completed ?  'bg-red-500' : 'bg-emerald-600'}  text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
               Mark as {video?.completed && 'Not'} Done
           </button>
         </div>
