@@ -1,7 +1,6 @@
 import { Navbar } from "../components";
 import { Sidebar } from "../components";
 import { Playlist } from "../components";
-import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
 
 const SearchPlaylist = () => {
