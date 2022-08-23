@@ -19,9 +19,9 @@ function Login() {
           withCredentials: true,
         }
       );
-      dispatch(setToken(data.token));
-      dispatch(setUser(data.user));
-      if(data.new){
+      dispatch(setToken(data?.token));
+      dispatch(setUser(data?.user));
+      if(data?.new){
         navigate("/createplaylist");
       }else{
         navigate('/dashboard');

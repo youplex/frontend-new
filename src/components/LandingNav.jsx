@@ -1,16 +1,18 @@
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 
-const LandingNav = () => {
+const LandingNav = ({ login }) => {
   const { token } = useSelector((state) => ({ ...state.auth }));
   const navigate = useNavigate();
+  const [URLParams] = useSearchParams();
+  const redirect = URLParams.get('redirectedFrom');
 
   useEffect(() => {
     if(token){
-      navigate('/dashboard');
+      navigate(redirect || '/dashboard');
     }
   }, [token])
 
@@ -41,12 +43,12 @@ const LandingNav = () => {
               Visit Dashboard
             </NavLink>
           ) : (
-            <NavLink
-              to={"/login"}
+            <button
+              onClick={() => login()}
               className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
             >
               Login
-            </NavLink>
+            </button>
           )}
           {/* Hamburger Icon */}
           <button

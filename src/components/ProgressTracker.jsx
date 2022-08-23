@@ -11,6 +11,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
   const activeLabelStyles =
     "bg-btn w-max text-white px-2 py-1 rounded text-bold cursor-pointer";
   const [sortType, setSortType] = useState("date");
+  const [searchTerm, setSearchTerm] = useState("");
   const handleCheckBoxChange = (e) => {
     if (sortType === e.target.value) return;
     setSortType((prev) => e.target.value);
@@ -35,7 +36,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
           ))}
         </div>
       )}
-      <form className="ml-52 flex justify-between w-32 my-20 text-md">
+      <form className="ml-52 flex justify-between w-32 my-10 text-md">
         <label
           htmlFor="date"
           className={sortType === "date" ? activeLabelStyles : labelStyles}
@@ -65,7 +66,22 @@ function ProgressTracker({ playlistData, isLoading, error }) {
           className="hidden"
         />
       </form>
-      <Playlist header="Playlists" sortType={sortType} />
+      <div className="search container w-4/5 flex py-2  mt-4 space-y-8 md:flex-row md:space-y-0 ">
+        <form onSubmit={(e) => e.preventDefault()} className="w-full">
+          <div className="relative">
+            <input
+              autoComplete="none"
+              className="ml-52 pl-4 py-1 w-9/12 bg-white rounded border border-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 mt-2 leading-8 transition-colors duration-200 ease-in-out"
+              type="text"
+              placeholder=" Search Playlist"
+              name="search"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {/* <AiOutlineSearch className="absolute right-40 " /> */}
+          </div>
+        </form>
+      </div>
+      <Playlist header="Playlists" sortType={sortType} searchTerm={searchTerm}/>
     </>
   );
 }

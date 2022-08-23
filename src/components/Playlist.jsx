@@ -43,7 +43,7 @@ function Playlist({ header, sortType = "", searchTerm = "" }) {
   return (
     <>
       <div className="ml-52 my-5 text-xl font-medium">{header}</div>
-      <div className="ml-52 min-w-max h-min grid grid-cols-2 gap-6 mb-4 ">
+      <div className="ml-52 min-w-max h-min grid grid-cols-2 gap-6 mb-10 ">
         {isLoading ? (
           <h1>Loading ...</h1>
         ) : (

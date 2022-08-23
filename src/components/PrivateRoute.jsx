@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
+    const { pathname, search }= useLocation();
     const { token } = useSelector((state) => ({...state.auth}));
 
-    return token ? children : <Navigate to='/' replace /> ; 
+    return token ? children : <Navigate to={`/?redirectedFrom=${pathname+search}`} replace /> ; 
 }
 
 export default PrivateRoute;

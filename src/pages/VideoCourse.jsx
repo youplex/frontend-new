@@ -133,7 +133,7 @@ const VideoCourse = () => {
         <>
         
         <div >
-          <Link to="/home">
+          <Link to={`/playlist/${playlist}`}>
             <div className=" absolute top-4 left-24  max-h-full ">
               <HiArrowNarrowLeft  size={28}/>
             </div>
@@ -143,14 +143,14 @@ const VideoCourse = () => {
         </div>
   
         <div className="flex ml-24">
-          <div className="container border-opacity-60 overflow-clip rounded-lg max-h-max ">
+          <div className="container border-opacity-60 rounded-lg max-h-max ">
             <VideoPlayer videoId={video?.videoId} playerRef={playerRef} />
           </div>
   
           <div className="container w-4/5">
             {readOnly ?
             <div className="">
-                <div style={{ background: 'whitesmoke', overflowY: 'scroll', height: '421px' , maxHeight: "421px", width: '396px'}}>
+                <div style={{ background: 'whitesmoke', overflowY: 'auto', height: '453px' , maxHeight: "453px", width: '396px'}}>
               {notes.length < 1 && 
                 <p className='p-4 text-lg'>
                   Create a note to view it <br />
@@ -193,7 +193,7 @@ const VideoCourse = () => {
             :
             <form onSubmit={handleSubmit}>
             <RichTextEditor editorState={editorState} setEditorState={setEditorState} />
-            <div className='flex' style={{ width: '396px' }}>
+            <div className='flex' style={{ width: '408px' }}>
               {editMode ?
               <>
               <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>

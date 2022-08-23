@@ -3,7 +3,7 @@ import hero from "../assets/hero.svg";
 // import { HiChevronDown } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-function LandingHeader() {
+function LandingHeader({ login }) {
   return (
     <>
       {/* Hero Section */}
@@ -20,12 +20,12 @@ function LandingHeader() {
               custom timestamps.
             </p>
             <div className="flex justify-center md:justify-start">
-              <Link
-                to={"/login"}
+              <button
+                onClick={() => login()}
                 className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700"
               >
                 Get Started
-              </Link>
+              </button>
             </div>
           </div>
           {/* Image */}

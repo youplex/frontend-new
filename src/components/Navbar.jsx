@@ -1,12 +1,35 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/outline";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { logoutUser } from "../redux/services/authSlice";
+import { useNavigate } from "react-router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 function Navbar({ page }) {
+  const { user, token } = useSelector((state) => ({...state.auth}));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const { data, status } = await axios.post('/auth/logout', {}, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        dispatch(logoutUser());
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className=" mb-12">
       <Disclosure as="nav" className="bg-white">
@@ -30,9 +53,10 @@ function Navbar({ page }) {
                       <Menu.Button className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span className="sr-only">Open user menu</span>
                         <img
+                          referrerPolicy="no-referrer"
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1479936343636-73cdc5aae0c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-                          alt=""
+                          src={ `${user?.image}` || "https://images.unsplash.com/photo-1479936343636-73cdc5aae0c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"}
+                          alt={user?.name || 'user'}
                         />
                       </Menu.Button>
                     </div>
@@ -48,7 +72,7 @@ function Navbar({ page }) {
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
-                            <a
+                            <a onClick={handleLogout}
                               href="#"
                               className={classNames(
                                 active ? "bg-gray-100" : "",

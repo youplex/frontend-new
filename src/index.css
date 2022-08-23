@@ -346,9 +346,6 @@ p {
   transition: var(--speed);
 }
 
-.description-width{
-  
-}
 @media screen and (max-width: 768px){
   .login-container{
     position: relative;

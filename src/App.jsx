@@ -48,12 +48,12 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<UserHome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/createplaylist" element={<CreatePlaylist />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/createplaylist" element={<PrivateRoute><CreatePlaylist /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/playlistDashboard" element={<PlaylistDashboard />} />
         <Route  path="/search" element={<PrivateRoute><SearchPlaylist /></PrivateRoute>}/>
-        <Route path="/schedule" element={<Scheduling />} />
+        <Route path="/schedule" element={<PrivateRoute><Scheduling /></PrivateRoute>} />
         <Route path='/playlist/:playlistId' element={<SinglePlaylist />} />
         <Route path="/video/:videoId" element={<PrivateRoute><VideoCourse /></PrivateRoute>} />
         <Route path="/notes" element={<PrivateRoute><VideoNotes /></PrivateRoute>} />
