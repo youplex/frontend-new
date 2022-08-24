@@ -90,20 +90,24 @@ export default function Scheduling() {
             ></textarea>
           </div>
         </div>
-        <div className="flex gap-5">
-          <div className="relative mt-32">
+        <div className="flex gap-5  items-center">
+
+          <div className=" mt-4">
             <h2 className="font-medium">Select Start Time</h2>
             <DateTime dateTime={startTime} setDateTime={setStartTime} />
           </div>
-          <div className="relative mt-32">
+
+          <div className=" mt-4">
             <h2 className="font-medium">Select End Time</h2>
             <DateTime dateTime={endTime} setDateTime={setEndTime} />
           </div>
+
           <button
             onClick={handleSchedule}
-            className="mt-36 bg-primary px-2 py-1 absolute top-80 rounded text-white focus:outline-none hover:bg-blue-700"
+            className=" w-max h-max bg-primary py-1 px-2 ml-24 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
           >
             Schedule
+
           </button>
         </div>
       </div>
