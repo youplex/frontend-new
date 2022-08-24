@@ -1,6 +1,6 @@
 import Card from "@mui/material/Card";
 
-import { IoEllipsisVerticalSharp } from "react-icons/io5";
+// import { IoEllipsisVerticalSharp } from "react-icons/io5";
 // import { Disclosure, Menu, Transition } from "@headlessui/react";
 import React,{ Fragment,useState,useRef,useEffect} from "react";
 
@@ -17,9 +17,7 @@ const styles = {
   height:'max-content'
   
 };
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 export const convertSecToHMS = (time_in_seconds) => {
 
   let remainingSeconds = time_in_seconds; // initialize with total time
@@ -40,6 +38,9 @@ export const convertSecToHMS = (time_in_seconds) => {
 
 function Notes({ data = [] }) {
 
+  const handleDelete=()=>{
+    console.log("something")
+  }
 
 
 
@@ -58,10 +59,10 @@ function Notes({ data = [] }) {
 
               {/* dropdown delete */}
               
-                <button onClick={()=>console.log("works")} className=" w-8 h-8 hover:bg-gray-300 ease-in duration-300 rounded-full flex justify-center items-center"  >
+                <button  onClick={handleDelete} className=" w-max h-max px-2 text-sm text-slate-100 bg-red-600 hover:bg-red-400 ease-in duration-300 rounded flex justify-center items-center"  >
 
               
-                  <IoEllipsisVerticalSharp  />
+                  Delete
                   
 
               
