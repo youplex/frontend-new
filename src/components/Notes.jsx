@@ -12,7 +12,7 @@ const styles = {
   width: "1125px",
   backgroundColor: "#ededed",
   boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-  marginTop:'20px',
+  marginTop:'20px', 
   position: 'relative',  
   height:'max-content'
   
