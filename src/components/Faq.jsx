@@ -18,12 +18,12 @@ class Faq extends React.Component {
       {
         label: "How to get customised notifications?",
         value:
-          "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero, enim?",
+          "Add a summary, description and schedule an event in your Google calendar",
       },
       {
         label: "Are there any charges for this?",
         value:
-          "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero, enim?",
+          "No, this is completely free!",
       },
     ];
     return (

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
 import { Navbar } from "../components";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { toast } from 'react-toastify';
 
 function CreatePlaylist() {
   const { user, token } = useSelector((state) => ({ ...state.auth }));
   const [playlistURL, setPlaylistURL] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCreatePlaylist = async (e) => {
@@ -19,10 +20,10 @@ function CreatePlaylist() {
       listId?.startsWith("PL") && Ytdomain.includes(link.hostname);
 
     if (!matchesPlaylistPattern) {
-      alert("Playlist link is incorrect, try again");
+      toast.error("Playlist link is incorrect, try again");
       return;
     }
-
+    setLoading(true);
     try {
       const { data, status } = await axios.post(
         "/playlist/create",
@@ -35,12 +36,15 @@ function CreatePlaylist() {
         }
       );
       if (status === 200) {
+        toast.success('Playlist created successfully');
         navigate("/dashboard");
       } else {
-        alert("Please enter a valid playlist link.");
+        toast.error("Please enter a valid playlist link.");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Some error occured try again");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -65,9 +69,15 @@ function CreatePlaylist() {
           />
           {/* + button removed */}
           <div className="flex justify-center mt-6">
-            <button className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700">
-              Generate Playlist
-            </button>
+            {loading ? (
+              <div className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700">
+                Loading ...
+              </div>
+            ) : (
+              <button className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700">
+                Generate Playlist
+              </button>
+            )}
           </div>
         </form>
       </div>

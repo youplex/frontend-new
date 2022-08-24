@@ -1,9 +1,10 @@
 import React from "react";
 import hero from "../assets/hero.svg";
-// import { HiChevronDown } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 function LandingHeader({ login }) {
+  const { token } = useSelector((state) => ({ ...state.auth }));
   return (
     <>
       {/* Hero Section */}
@@ -20,12 +21,18 @@ function LandingHeader({ login }) {
               custom timestamps.
             </p>
             <div className="flex justify-center md:justify-start">
-              <button
-                onClick={() => login()}
-                className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700"
-              >
+              {token ? <Link 
+                  to={'/dashboard'}
+                  className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700"
+                >Dashboard</Link> : (
+                <button
+                  onClick={() => login()}
+                  className="p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700"
+                >
                 Get Started
-              </button>
+                </button>
+              )}
+             
             </div>
           </div>
           {/* Image */}

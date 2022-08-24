@@ -11,6 +11,7 @@ function Login() {
   const { token } = useSelector((state) => ({ ...state.auth }));
 
   const handleSuccess = async (res) => {
+    return;
     try {
       const { data } = await axios.post(
         "/auth/login",
@@ -33,6 +34,7 @@ function Login() {
   };
 
   const handleError = (res) => {
+    return;
     console.log("error", res);
     alert("Some Error occured check console");
   };
@@ -45,6 +47,7 @@ function Login() {
   });
 
   const handleLogout = async () => {
+    return;
     try {
       const { data, status } = await axios.post(
         "/auth/logout",

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Sidebar, VideoPlayer, Navbar, RichTextEditor } from '../components';
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { VideoPlayer, Navbar, RichTextEditor } from '../components';
 import { useSelector } from 'react-redux';
 import { useSearchParams, useParams, Link} from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
@@ -9,6 +8,7 @@ import { EditorState, convertToRaw, convertFromRaw, Editor } from 'draft-js';
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { convertSecToHMS } from '../components/Notes';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const VideoCourse = () => {
   const { token } = useSelector((state) => ({...state.auth}));
@@ -23,7 +23,9 @@ const VideoCourse = () => {
   const video = videos[videoIndex] || {};
   const upcomingVideos = videos.slice(videoIndex + 1, videoIndex + 4);
 
+  const [noteLoading, setNoteLoading] = useState(false);
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const editorContent = convertToRaw(editorState.getCurrentContent());
@@ -33,6 +35,7 @@ const VideoCourse = () => {
    
     const timestamp = Math.floor(playerRef.current.getCurrentTime());
     if(!timestamp) return;
+    setNoteLoading(true);
      try {
       const { data, status } = await axios.post('/note/create', {title, content, timestamp, noteFor: video._id }, {
         headers: {
@@ -40,12 +43,14 @@ const VideoCourse = () => {
         }, withCredentials: true
       });
       if(status == 200){
-        console.log(data);
+        toast.success('Note saved');
         noteRefetch();
         setReadOnly(true);
       }
      } catch (error) {
         console.log(error);
+     }finally{
+      setNoteLoading(false);
      }
   };
 
@@ -59,7 +64,7 @@ const VideoCourse = () => {
     const note_id = editMode?.note_id;
 
     if(!timestamp || !note_id) return;
-    
+    setNoteLoading(true);
     try {
       const { data, status } = await axios.put(`/note/${note_id}`, { title, content, timestamp }, {
         headers: {
@@ -67,13 +72,15 @@ const VideoCourse = () => {
         }, withCredentials: true
       });
       if(status == 200){
-        console.log(data);
+        toast.success('Note updated');
         noteRefetch();
         resetEditor();
         setReadOnly(true);
       }
      } catch (error) {
         console.log(error);
+     }finally{
+      setNoteLoading(false);
      }
   }
 
@@ -92,6 +99,7 @@ const VideoCourse = () => {
         }, withCredentials: true
       });
       if(status == 200){
+        toast.success('Note deleted');
         noteRefetch();
       }
     } catch (error) {
@@ -107,9 +115,11 @@ const VideoCourse = () => {
   const [editMode, setEditMode] = useState(false); // false or the time in seconds
   const [readOnly, setReadOnly] = useState(false);
 
+  const [markLoading, setMarkLoading] = useState(false);
+
   const handleVideoDone = async () => {
     const { title, description, completed } = video;
-
+      setMarkLoading(true);
       try {
         const { data, status } = await axios.put(`/video/${video._id}`, { 
           title, description, completed: !completed 
@@ -125,6 +135,8 @@ const VideoCourse = () => {
         
       } catch (error) {
         console.log(error);
+      }finally{
+        setMarkLoading(false);
       }
   }
 
@@ -196,17 +208,33 @@ const VideoCourse = () => {
             <div className='flex' style={{ width: '408px' }}>
               {editMode ?
               <>
-              <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
-                Update Note
-              </button>
+              {noteLoading ? (
+                <div className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                  Loading ...
+                </div>
+              ) : (
+                <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                  Update Note
+                </button>
+              )
+              }
+             
               <button type='button' onClick={() => {resetEditor(); setReadOnly(false)}} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
                 Back to Editor
               </button>
               </>
               :
+              <>
+              {noteLoading? (
+                <div className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
+                  Loading ...
+                </div>
+              ) : (
               <button className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
                 Save Note
               </button>
+              )}
+              </>
               }
             </div>
           </form>
@@ -223,9 +251,17 @@ const VideoCourse = () => {
           <button onClick={() => setReadOnly(true)} className={`bg-primary text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
               View Saved Notes
           </button>
-          <button onClick={handleVideoDone} className={`${video?.completed ?  'bg-red-500' : 'bg-emerald-600'}  text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
-              Mark as {video?.completed && 'Not'} Done
-          </button>
+
+          {markLoading ? (
+            <div className={`bg-primary text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
+              Loading ...
+            </div>
+          ) : (
+            <button onClick={handleVideoDone} className={`${video?.completed ?  'bg-red-500' : 'bg-emerald-600'}  text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
+                Mark as {video?.completed && 'Not'} Done
+            </button>
+          )}
+         
         </div>
 
         <div className=" description-width mx-24 flex  justify-between  mt-8">
@@ -242,23 +278,13 @@ const VideoCourse = () => {
           </div>
         </div>
 
-        {/* <div  className='ml-24 mt-4' >
-          <h1 className="font-bold">Notes</h1>
-          {notes?.map((note) => {
-            return (
-              <span className='cursor-pointer' onClick={() => handleNoteShow(note)} key={note._id}>
-                {convertSecToHMS(note?.timestamp)} - { note?.title} <br/>
-              </span>
-            )
-          })}
-        </div> */}
        
         <div className="ml-24 mt-4">
           <h2 className="font-bold">Upcoming Videos</h2>
         </div>
   
         {/* Carousel */}
-        <section className="text-gray-600 body-font">
+        <section className="text-gray-500 body-font">
           <div className=" ml-24 mr-12  py-2 ">
             <div className="flex mb-10">
             
@@ -272,6 +298,7 @@ const VideoCourse = () => {
                       src={video?.thumbnail || "https://dummyimage.com/720x400"}
                       alt="blog"
                     />
+                    <h1 className='text-center pt-2 h-16'>{video?.title}</h1>
                   </div>
                 </Link>
                 </div> 

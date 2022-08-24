@@ -1,20 +1,26 @@
 import { NavLink } from "react-router-dom";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const LandingNav = ({ login }) => {
   const { token } = useSelector((state) => ({ ...state.auth }));
   const navigate = useNavigate();
+  const { pathname } = useLocation()
   const [URLParams] = useSearchParams();
-  const redirect = URLParams.get('redirectedFrom');
+  const redirect = URLParams.get('redirectedFrom') || '';
+  // fix - 
+  const description = URLParams.get('description') || '';
 
   useEffect(() => {
-    if(token){
-      navigate(redirect || '/dashboard');
+    if(token && (pathname === '/' && redirect)){
+      let navigateURL = redirect;
+      if(description && redirect) navigateURL += `&description=${description}`;
+      // fix - 
+      navigate(navigateURL || '/dashboard');
     }
-  }, [token])
+  }, [token]);
 
   return (
     <>

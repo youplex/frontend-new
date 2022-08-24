@@ -18,8 +18,6 @@ const Dashboard = () => {
       :
         <ProgressTracker {...{playlistData, isLoading, error}} />
       }
-      {/* <SearchBar placeholder="Quick Search..."/> */}
-      {/* <VideoPlayer /> */}
     </>
   );
 };

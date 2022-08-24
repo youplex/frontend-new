@@ -18,13 +18,13 @@ function LandingPage() {
           withCredentials: true,
         }
       );
-      dispatch(setToken(data?.token));
-      dispatch(setUser(data?.user));
       if(data?.new){
-        navigate("/createplaylist");
+        navigate("/createplaylist?isNew?true");
       }else{
         navigate('/dashboard');
       }
+      dispatch(setUser(data?.user));
+      dispatch(setToken(data?.token));
     } catch (error) {
       alert("Login error");
       console.log(error);

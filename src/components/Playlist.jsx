@@ -11,7 +11,7 @@ import { usePlaylistQuery } from "../redux/services/playlistApi";
 import { useMemo } from "react";
 
 const styles={
-  width: 400,height:350, boxShadow:  '2px 2px 4px rgba(161, 89, 101, 0.25)' 
+  width: 400, height:350, boxShadow:  '2px 2px 4px rgba(161, 89, 101, 0.25)'
 }
 function Playlist({ header, sortType = "", searchTerm = "" }) {
   
@@ -49,9 +49,6 @@ function Playlist({ header, sortType = "", searchTerm = "" }) {
     <>
       <div className="ml-40 my-5 text-xl font-medium ">{header}</div>
 
-      <div className>
-          {/* <Searchbar /> */}
-      </div>
       <div className=" ml-40  h-min grid grid-cols-3 w-max grid-flow-row gap-3  mb-10 ">
         {isLoading ? (
           <h1>Loading ...</h1>
@@ -71,8 +68,8 @@ function Playlist({ header, sortType = "", searchTerm = "" }) {
                         style={{ fontSize: 20 }}
                         className="flex justify-center"
                       >
-                        {item?.title?.length > 45
-                          ? `${item?.title?.substring(0, 43)}...`
+                        {item?.title?.length > 35
+                          ? `${item?.title?.substring(0, 33)}...`
                           : item?.title}
                       </strong>
                     </Typography>

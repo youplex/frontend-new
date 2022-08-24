@@ -3,14 +3,16 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Loader, Navbar, Sidebar } from "../components";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { useVideosQuery } from "../redux/services/playlistApi";
+import { useVideosQuery, usePlaylistQuery } from "../redux/services/playlistApi";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 function SinglePlaylist() {
   const { token } = useSelector((state) => ({ ...state.auth }));
   const { playlistId } = useParams();
   const navigate = useNavigate();
+  const { refetch: refetchPlaylists } = usePlaylistQuery(token);
   const { data: { playlist = {}, videos = [] } = {}, isLoading } =
     useVideosQuery({
       token,
@@ -26,7 +28,9 @@ function SinglePlaylist() {
         withCredentials: true,
       });
       if (status === 200) {
+        toast.success('Playlist deleted successfully');
         navigate("/dashboard");
+        refetchPlaylists();
       }
       console.log(data);
     } catch (error) {
@@ -39,12 +43,12 @@ function SinglePlaylist() {
       <Sidebar />
       <Navbar page="Your Playlist" />
 
-      <div className="ml-52 mt-4 flex w-4/5 space-x-16	">
+      <div className="ml-40 mt-4 flex w-4/5 space-x-16	">
         <div className="rounded-lg mr-8">
-          <img alt="content" src={playlist?.thumbnail} />
+          <img className="rounded-md" alt="content" src={playlist?.thumbnail} />
         </div>
 
-        <div className="	top-22 w-80">
+        <div className="top-22 w-80">
           <h1 className="font-bold text-xl">{playlist?.title}</h1>
           {isLoading && <Loader message="Fetching playlists" />}
           <p>{playlist?.description || "No description"}</p>
@@ -66,32 +70,32 @@ function SinglePlaylist() {
         </div>
       </div>
 
-      <div className="ml-52 my-5 mt-10 text-xl font-medium	">
+      <div className="ml-40 my-5 mt-10 text-xl font-medium	">
         Videos in this playlist
       </div>
-      <div className="ml-52 mb-10">
+      <div className="ml-40 mb-10">
         {isLoading && <Loader />}
         {videos?.map((item, index) => {
           return (
-            <Card
-              key={item._id}
-              style={{ backgroundColor: "#F6F7FF", marginBottom: "10px" }}
-              sx={{ width: 1125 }}
-            >
-              <CardContent style={{ padding: "10px" }}>
-                <div className="flex  p-2">
-                  <h2 className="justify-self-start mr-2">{index + 1}. </h2>
-                  <Link to={`/video/${item._id}?playlist=${playlist._id}`}>
-                    <p className="justify-self-start">
+            <Link to={`/video/${item._id}?playlist=${playlist._id}`}>
+              <Card
+                key={item._id}
+                style={{ backgroundColor: "#F6F7FF", marginBottom: "10px" }}
+                sx={{ width: 1125 }}
+              >
+                <CardContent style={{ padding: "10px" }}>
+                  <div className="flex  justify-center p-2">
+                    <h2 className="  mr-2">{index + 1}. </h2>
+
+                    <p className="justify-center">
                       {item.title.length > 120
                         ? `${item.title.substring(0, 117)}...`
                         : item.title}{" "}
                     </p>
-                  </Link>
-                  {/* <h2 className="justify-end">--:--</h2> */}
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </div>

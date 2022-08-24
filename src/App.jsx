@@ -9,7 +9,7 @@ import {
   Dashboard,
   LandingPage,
   CreatePlaylist,
-  Login,
+  PlaylistDashboard,
   SearchPlaylist,
   Error,
   SinglePlaylist,
@@ -19,7 +19,7 @@ import {
   Privacy
 } from "./pages";
 import { Footer, PrivateRoute } from "./components";
-import PlaylistDashboard from "./pages/PlaylistDashboard";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const { token } = useSelector((state) => ({ ...state.auth }));
@@ -45,11 +45,11 @@ function App() {
 
   return (
     <>
+      <ToastContainer position="top-center" />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<UserHome />} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        <Route path="/createplaylist" element={<PrivateRoute><CreatePlaylist /></PrivateRoute>} />
+        <Route path="/createplaylist" element={<CreatePlaylist />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/playlistDashboard" element={<PlaylistDashboard />} />
         <Route  path="/search" element={<PrivateRoute><SearchPlaylist /></PrivateRoute>}/>

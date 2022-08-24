@@ -5,13 +5,12 @@ import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import Playlist from "./Playlist";
 import Card from "../components/Card";
-import { IconContext } from "react-icons";
 
 function ProgressTracker({ playlistData, isLoading, error }) {
   const labelStyles =
     "px-2 py-1 mr-4 border-solid border rounded border-black cursor-pointer";
   const activeLabelStyles =
-    "bg-btn w-max text-white px-2 py-1  rounded text-bold cursor-pointer";
+    "bg-btn w-max mr-4 text-white px-2 py-1  rounded text-bold cursor-pointer";
   const [sortType, setSortType] = useState("date");
   const [searchTerm, setSearchTerm] = useState("");
   const handleCheckBoxChange = (e) => {
@@ -38,15 +37,16 @@ function ProgressTracker({ playlistData, isLoading, error }) {
               index={index}
               completed={item.completedVideos}
             />
-          ))}
+            ))}
         </div>
       )}
 
+      <div className="ml-40 my-2 text-xl font-medium ">Playlists</div>
+      
       <div className="search container w-4/5 flex py-2  mt-2  md:flex-row md:space-y-0 ">
         <form onSubmit={(e) => e.preventDefault()} className="w-full">
           <div className="relative">
             <input
-              autoComplete="none"
               className="ml-40 pl-4  w-9/12 bg-white rounded border border-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 mt-2 leading-8 transition-colors duration-200 ease-in-out"
               type="text"
               placeholder=" Search Playlist"
@@ -55,7 +55,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
             />
             {/* <AiOutlineSearch className="absolute right-40 " /> */}
             <button
-              className="absolute top-5 right-32 cursor-pointer"
+              className="absolute top-5 right-40 cursor-pointer"
               onClick={(e) => setSearchTerm(e.target.value)}
             >
               <BsSearch size={18} color="#9CA3AF" />
@@ -96,7 +96,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
         />
       </form>
       <Playlist
-        header="Playlists"
+        header=""
         sortType={sortType}
         searchTerm={searchTerm}
       />
