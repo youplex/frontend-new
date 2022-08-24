@@ -134,7 +134,7 @@ const VideoCourse = () => {
         
         <div >
           <Link to={`/playlist/${playlist}`}>
-            <div className=" absolute top-4 left-24  max-h-full ">
+            <div className=" absolute top-4 left-24  max-h-full rounded-full hover:bg-gray-300  p-2 ">
               <HiArrowNarrowLeft  size={28}/>
             </div>
           </Link>

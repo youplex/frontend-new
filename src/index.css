@@ -338,7 +338,19 @@ p {
   justify-content: start;
 }
 
-
+.hover-class{
+  color: white;
+  background-color:hsl(223 91% 32% ); 
+}
+.hover-class:first-child{
+  color: hsl(223 91% 32% );
+  background-color: white;
+}
+.hover-class:hover{
+  color:hsl(223 91% 32% ) ;
+  background-color: white;
+  transition: all 0.3s;
+}
 
 .dropdown-item button{
   max-width: 100px;

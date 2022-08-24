@@ -14,9 +14,10 @@ function Sidebar() {
           <ul className="sidebar-menu-items ">
             {SidebarData.map((item, index) => {
               return (
+
                 <li
                   key={index}
-                  className="  h-max w-max p-3 mt-5 rounded-full hover-class "
+                  className=" h-max w-max p-3 mt-5 rounded-full hover-class cursor-pointer  "
                 >
                   <NavLink to={item.path}>
                     <IconContext.Provider value={{}}>
