@@ -258,7 +258,7 @@ const VideoCourse = () => {
         </div>
   
         {/* Carousel */}
-        <section className="text-gray-600 body-font">
+        <section className="text-gray-500 body-font">
           <div className=" ml-24 mr-12  py-2 ">
             <div className="flex mb-10">
             
@@ -272,8 +272,11 @@ const VideoCourse = () => {
                       src={video?.thumbnail || "https://dummyimage.com/720x400"}
                       alt="blog"
                     />
+
+                    <h1 className='text-center pt-2 h-16'>{video?.title}</h1>
                   </div>
                 </Link>
+                
                 </div> 
                 )
               })}
