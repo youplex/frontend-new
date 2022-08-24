@@ -1,3 +1,5 @@
+import Searchbar from './Searchbar'
+
 export { default as Faq } from './Faq'
 export { default as Footer } from './Footer' 
 export { default as LandingFeatures } from './LandingFeatures' 
@@ -15,3 +17,4 @@ export {default as Notes} from './Notes'
 export { default as DateTime } from './DateTime'
 export { default as Loader } from './Loader'
 export { default as PrivateRoute } from './PrivateRoute';
+export {default as Searchbar} from './Searchbar'

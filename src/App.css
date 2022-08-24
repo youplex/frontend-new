@@ -8,6 +8,10 @@
   background-color: hsl(223 91% 32% / var(--tw-bg-opacity));
 }
 
+.text-color-primary{
+  --tw-bg-opacity: 1;
+  color: hsl(223 91% 32% / var(--tw-bg-opacity));
+}
 .bg-text {
   --tw-bg-opacity: 1;
   color: hsl(0 0% 16% / var(--tw-bg-opacity));

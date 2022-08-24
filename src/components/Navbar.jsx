@@ -31,12 +31,12 @@ function Navbar({ page }) {
     }
   }
   return (
-    <div className=" mb-12">
+    <div className=" mb-8">
       <Disclosure as="nav" className="bg-white">
         {({ open }) => (
           <>
             <div>
-              <div className="flex justify-between ml-52 py-6 h-16 w-4/5">
+              <div className="flex justify-between ml-40 py-6 h-16 w-4/5">
                 <h1 className="text-bold font-bold text-2xl">{page}</h1>
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
                   <button
