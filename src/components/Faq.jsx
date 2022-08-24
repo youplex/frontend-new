@@ -16,14 +16,14 @@ class Faq extends React.Component {
           "All you need to do is login with your Google Account and add the playlist links. You can then customise them accordingly.",
       },
       {
-        label: "How to get customised notifications?",
+        label: "How to get your playlist scheduled?",
         value:
-          "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero, enim?",
+          "Connect your gmail with youplex and get notifications about your schedule. ",
       },
       {
         label: "Are there any charges for this?",
         value:
-          "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero, enim?",
+          "It's free and always will be!",
       },
     ];
     return (
