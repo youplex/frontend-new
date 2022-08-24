@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-// import Card from "@mui/material/Card";
-// import CardContent from "@mui/material/CardContent";
-// import Typography from "@mui/material/Typography";
 import { BsSearch } from "react-icons/bs";
 import Playlist from "./Playlist";
 import Card from "../components/Card";
@@ -30,7 +27,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
         <div className="ml-40 card-wrapper">
           {playlistData?.slice(0, 4)?.map((item, index) => (
             <Card
-              sx={{ marginBottm: 0 }}
+              sx={{ marginBottom: 0 }}
               key={item._id}
               title={item.title}
               videosCount={item.totalVideos}
@@ -47,7 +44,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
         <form onSubmit={(e) => e.preventDefault()} className="w-full">
           <div className="relative">
             <input
-              className="ml-40 pl-4  w-9/12 bg-white rounded border border-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 mt-2 leading-8 transition-colors duration-200 ease-in-out"
+              className="ml-40 pl-4  w-8/12 bg-white rounded border border-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 mt-2 leading-8 transition-colors duration-200 ease-in-out"
               type="text"
               placeholder=" Search Playlist"
               name="search"
@@ -55,7 +52,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
             />
             {/* <AiOutlineSearch className="absolute right-40 " /> */}
             <button
-              className="absolute top-5 right-40 cursor-pointer"
+              className="absolute top-5 right-56 cursor-pointer"
               onClick={(e) => setSearchTerm(e.target.value)}
             >
               <BsSearch size={18} color="#9CA3AF" />

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { logoutUser } from "../redux/services/authSlice";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -41,10 +42,11 @@ function Navbar({ page }) {
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
                   <button
                     type="button"
-                    className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
+                    <Link to='/createplaylist' className="bg-primary hover:bg-blue-500 ease-in duration-100 text-white px-4 py-2 mr-4 rounded h-max w-max">Create Playlist</Link>
                   </button>
 
                   {/* Profile dropdown */}
@@ -54,7 +56,7 @@ function Navbar({ page }) {
                         <span className="sr-only">Open user menu</span>
                         <img
                           referrerPolicy="no-referrer"
-                          className="h-8 w-8 rounded-full"
+                          className="h-8 w-8 rounded-full  border-2  border-blue-500 "
                           src={ `${user?.image}` || "https://images.unsplash.com/photo-1479936343636-73cdc5aae0c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"}
                           alt={user?.name || 'user'}
                         />

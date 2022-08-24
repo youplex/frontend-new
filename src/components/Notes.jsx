@@ -1,15 +1,19 @@
 import Card from "@mui/material/Card";
-import { IoEllipsisVerticalSharp } from "react-icons/io5";
-import React,{ Fragment,useState,useRef,useEffect} from "react";
+// import { IoEllipsisVerticalSharp } from "react-icons/io5";
+// import { Disclosure, Menu, Transition } from "@headlessui/react";
+import React,{ Fragment } from "react"
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 // import { NotesData } from "../data";
 
 
 const styles = {
   width: "1125px",
   backgroundColor: "#ededed",
-  boxShadow: " 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);",
-  marginTop:'20px',
+  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+  marginTop:'20px', 
   position: 'relative',  
   height:'max-content'
   
@@ -33,44 +37,40 @@ export const convertSecToHMS = (time_in_seconds) => {
   return out.join(':');
 }
 
-function Notes({ data = [] }) {
+function Notes({ data = [], refetchNotes = () => {} }) {
+  const { token } = useSelector((state) => ({ ...state.auth }));
 
-  //ellipsis dropdown menu open/close.
-  const [open,setOpen]=useState(false);
-  let menuRef=useRef();
-
-useEffect(()=>{
-  let handler = (e)=>{
-    if(!menuRef.current.contains(e.target)){
-      setOpen(false);
-      console.log(menuRef.current);
-    }      
-  };
-
-  document.addEventListener("mousedown", handler);
-  
-
-  return() =>{
-    document.removeEventListener("mousedown", handler);
+  const handleDelete = async (note) => {
+    try {
+      const { status } = await axios.delete(`/note/${note._id}`, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        toast.success('Note deleted');
+        refetchNotes()
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-}
-)
 
   return (
     <>
-    {data.length < 1 && <h1 className="ml-40 text-lg">No notes, create a note</h1>}
     {data?.map((note)=>{
       return(
         <Fragment key={note._id}>
         <section className="text-gray-600 ml-40 body-font overflow-hidden " key={note.id}>
+        
         <Card sx={{ ...styles }}>
-            {/* <CardMedia component="img" image={item.thumbnail} alt={item.title} /> */}
+
             <div  className="container  flex justify-between px-2 py-2 ">
               <h1 className="font-bold text-xl ml-6">{note.title}</h1>
               {/* dropdown delete */}
-                <button onClick={()=>console.log("works")} className=" w-8 h-8 hover:bg-gray-300 ease-in duration-300 rounded-full flex justify-center items-center"  >
-                  <IoEllipsisVerticalSharp  />
+                <button  onClick={() => handleDelete(note)} 
+                  className="w-max h-max px-4 py-1 text-sm text-slate-100 bg-red-600 hover:bg-red-400 ease-in duration-300 rounded flex justify-center items-center"  >
+                  Delete
                 </button>
             </div>
               <div className="flex px-8 pb-4 ">

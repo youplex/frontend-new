@@ -93,7 +93,7 @@ const VideoCourse = () => {
 
   const handleDeleteNote = async (note) => {
     try {
-      const {data, status} = await axios.delete(`/note/${note._id}`, {
+      const { status } = await axios.delete(`/note/${note._id}`, {
         headers: {
           'x-auth-token': token
         }, withCredentials: true

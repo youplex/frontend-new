@@ -11,7 +11,7 @@ import { usePlaylistQuery } from "../redux/services/playlistApi";
 import { useMemo } from "react";
 
 const styles={
-  width: 400, height:350, boxShadow:  '2px 2px 4px rgba(161, 89, 101, 0.25)'
+  width: 360, height:350, boxShadow:  '2px 2px 4px rgba(161, 89, 101, 0.25)'
 }
 function Playlist({ header, sortType = "", searchTerm = "" }) {
   

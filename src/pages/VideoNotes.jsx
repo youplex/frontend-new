@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 
 function PlaylistNotes() {
   const { token } = useSelector((state) => ({...state.auth}));
-  const { data: notesData, isLoading, error } = useAllNotesQuery(token);
+  const { data: notesData, isLoading, error, refetch } = useAllNotesQuery(token);
   return (
     <>
       <Navbar page="Notes" />
       <Sidebar />
-      <Notes data={notesData} />
+      <Notes data={notesData} refetchNotes={refetch} />
     </>
   );
 }
