@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
-
+// import { Disclosure, Menu, Transition } from "@headlessui/react";
 import React,{ Fragment,useState,useRef,useEffect} from "react";
 
 import { convertFromRaw, Editor, EditorState } from 'draft-js';
@@ -11,13 +11,15 @@ import { convertFromRaw, Editor, EditorState } from 'draft-js';
 const styles = {
   width: "1125px",
   backgroundColor: "#ededed",
-  boxShadow: " 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);",
+  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
   marginTop:'20px',
   position: 'relative',  
   height:'max-content'
   
 };
-
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 export const convertSecToHMS = (time_in_seconds) => {
 
   let remainingSeconds = time_in_seconds; // initialize with total time
@@ -38,48 +40,38 @@ export const convertSecToHMS = (time_in_seconds) => {
 
 function Notes({ data = [] }) {
 
-  //ellipsis dropdown menu open/close.
-  const [open,setOpen]=useState(false);
-  let menuRef=useRef();
 
-useEffect(()=>{
-  let handler = (e)=>{
-    if(!menuRef.current.contains(e.target)){
-      setOpen(false);
-      console.log(menuRef.current);
-    }      
-  };
 
-  document.addEventListener("mousedown", handler);
-  
 
-  return() =>{
-    document.removeEventListener("mousedown", handler);
-  }
-
-}
-)
 
   return (
     <>
     {data?.map((note)=>{
       return(
         <Fragment key={note._id}>
-        <section className="text-gray-600 ml-52 body-font overflow-hidden " key={note.id}>
+        <section className="text-gray-600 ml-40 body-font overflow-hidden " key={note.id}>
         
         <Card sx={{ ...styles }}>
             {/* <CardMedia component="img" image={item.thumbnail} alt={item.title} /> */}
-            <div ref={menuRef} className="container  flex justify-between px-4 py-2 ">
-              <h1 className="font-semibold text-xl">{note.title}</h1>
-                <IoEllipsisVerticalSharp onClick={()=>{setOpen(!open)}} />
-              <div className={`dropdown-menu ${open?'active':'inactive'}`}>
-                <ul>
-                <DropdownItem text={"Delete"}/>
-                </ul>
-              </div>
+            <div  className="container  flex justify-between px-2 py-2 ">
+              <h1 className="font-bold text-xl ml-6">{note.title}</h1>
+
+              {/* dropdown delete */}
+              
+                <button onClick={()=>console.log("works")} className=" w-8 h-8 hover:bg-gray-300 ease-in duration-300 rounded-full flex justify-center items-center"  >
+
+              
+                  <IoEllipsisVerticalSharp  />
+                  
+
+              
+                
+                </button>
+              
+            
             </div>
               <div className="flex px-8 pb-4 ">
-                <span className="mr-8  font-semibold">{convertSecToHMS(note.timestamp)}</span>
+                <span className="mr-8 font-semibold">{convertSecToHMS(note.timestamp)}</span>
                 <div className="readonly-editor" >
                   <Editor 
                     editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(note.content)))} 
