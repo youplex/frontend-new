@@ -1,106 +1,128 @@
-import Card from "@mui/material/Card";
-// import { IoEllipsisVerticalSharp } from "react-icons/io5";
-// import { Disclosure, Menu, Transition } from "@headlessui/react";
-import React,{ Fragment } from "react"
-import { convertFromRaw, Editor, EditorState } from 'draft-js';
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { toast } from 'react-toastify';
-// import { NotesData } from "../data";
-
-
-const styles = {
-  width: "1125px",
-  backgroundColor: "#ededed",
-  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-  marginTop:'20px', 
-  position: 'relative',  
-  height:'max-content'
-  
-};
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import {
+  PencilIcon,
+  DotsVerticalIcon,
+  TrashIcon,
+} from "@heroicons/react/outline";
 
 export const convertSecToHMS = (time_in_seconds) => {
-
   let remainingSeconds = time_in_seconds; // initialize with total time
   const hours = Math.floor(remainingSeconds / (60 * 60));
-  remainingSeconds = time_in_seconds % 3600; 
+  remainingSeconds = time_in_seconds % 3600;
   const minutes = Math.floor(remainingSeconds / 60);
   const seconds = remainingSeconds % 60;
 
-  const formatTime = (t) => t.toString().padStart(2,0);
+  const formatTime = (t) => t.toString().padStart(2, 0);
 
   const out = [];
-  if(hours > 0) out.push(formatTime(hours));
+  if (hours > 0) out.push(formatTime(hours));
   out.push(formatTime(minutes));
   out.push(formatTime(seconds));
 
-  return out.join(':');
+  return out.join(":");
+};
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
 }
 
-function Notes({ data = [], refetchNotes = () => {} }) {
-  const { token } = useSelector((state) => ({ ...state.auth }));
-
-  const handleDelete = async (note) => {
-    try {
-      const { status } = await axios.delete(`/note/${note._id}`, {
-        headers: {
-          'x-auth-token': token
-        }, withCredentials: true
-      });
-      if(status == 200){
-        toast.success('Note deleted');
-        refetchNotes()
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+export default function Notes() {
   return (
-    <>
-    {data?.map((note)=>{
-      return(
-        <Fragment key={note._id}>
-        <section className="text-gray-600 ml-40 body-font overflow-hidden " key={note.id}>
-        
-        <Card sx={{ ...styles }}>
-
-            <div  className="container  flex justify-between px-2 py-2 ">
-              <h1 className="font-bold text-xl ml-6">{note.title}</h1>
-              {/* dropdown delete */}
-                <button  onClick={() => handleDelete(note)} 
-                  className="w-max h-max px-4 py-1 text-sm text-slate-100 bg-red-600 hover:bg-red-400 ease-in duration-300 rounded flex justify-center items-center"  >
-                  Delete
-                </button>
+    <div className="bg-gray-200 px-4 py-5 sm:px-6 ml-40 w-4/5 rounded-md">
+      <div className="flex space-x-3">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-lg font-medium text-gray-900">
+            <a href="#" className="hover:underline">
+              React Testing Playlist
+            </a>
+          </h1>
+          <p className="text-sm text-bg mt-2">
+            <a href="#" className="hover:underline">
+              August 25, 2022
+            </a>
+          </p>
+          <p className="text-md text-bg mt-4 leading-6">
+            <a href="#" className="hover:underline">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Necessitatibus id, fugiat voluptas vero reprehenderit explicabo,
+              aliquam sint voluptatibus tenetur dolore excepturi? Repellendus,
+              at quas! Aliquid eos enim, iste, cum sunt dolorum reiciendis quam
+              explicabo eius aspernatur ea voluptates totam nam nostrum nemo
+              aliquam iure at illum mollitia cupiditate nihil incidunt vero.
+              Assumenda excepturi rem accusantium illo corrupti nisi eum, quo
+              mollitia harum dolorum ducimus quas sit fugit veniam totam
+              consequatur. Ipsa eius, excepturi ipsum aperiam cupiditate labore
+              fugiat at, necessitatibus porro beatae nam eligendi saepe sed
+              rerum officia esse, quos aliquam. Et ad laudantium aut
+              necessitatibus distinctio, iusto est sapiente.
+            </a>
+          </p>
+        </div>
+        <div className="flex-shrink-0 self-top flex">
+          <Menu as="div" className="relative z-30 inline-block text-left">
+            <div>
+              <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
+                <span className="sr-only">Open options</span>
+                <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
+              </Menu.Button>
             </div>
-              <div className="flex px-8 pb-4 ">
-                <span className="mr-8 font-semibold">{convertSecToHMS(note.timestamp)}</span>
-                <div className="readonly-editor" >
-                  <Editor 
-                    editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(note.content)))} 
-                    readOnly={true}
-                  />
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <a
+                        href="#"
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "flex px-4 py-2 text-sm"
+                        )}
+                      >
+                        <PencilIcon
+                          className="mr-3 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <span>Edit</span>
+                      </a>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <a
+                        href="#"
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "flex px-4 py-2 text-sm"
+                        )}
+                      >
+                        <TrashIcon
+                          className="mr-3 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <span>Delete</span>
+                      </a>
+                    )}
+                  </Menu.Item>
                 </div>
-              </div>
-          </Card>
-        
-      </section>
-        </Fragment>
-      )
-    })}
-      
-    </>
-  ); 
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-//dropdown items.
-
-function DropdownItem(props){
-  return(
-    <li className="list-none dropdown-item">
-      <button >{props.text}</button>
-
-    </li>
-  )
-}
-export default Notes;
