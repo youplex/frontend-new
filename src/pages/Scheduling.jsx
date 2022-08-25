@@ -104,7 +104,7 @@ export default function Scheduling() {
           </div>
           
           {loading && (<div
-            className="mt-36 bg-primary px-4 py-2 absolute top-80 rounded text-white focus:outline-none hover:bg-blue-700"
+            className=" w-max h-max bg-primary py-1 px-2 ml-24 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
           >
             Loading ...
           </div>)}

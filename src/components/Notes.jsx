@@ -1,10 +1,16 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   PencilIcon,
   DotsVerticalIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
+import { RichTextEditor } from '../components';
+import { convertFromRaw, convertToRaw, Editor, EditorState } from 'draft-js';
+import axios from "axios";
+import { toast } from 'react-toastify';
+import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 export const convertSecToHMS = (time_in_seconds) => {
   let remainingSeconds = time_in_seconds; // initialize with total time
@@ -27,42 +33,108 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Notes() {
+export default function Notes({ data = [], refetchNotes = () => {} }) {
+  const { token } = useSelector((state) => ({ ...state.auth }));
+  const [editMode, setEditMode] = useState(false);
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+
+  const setupEditMode = (note) => {
+    setEditMode(note);
+    setEditorState(() => EditorState.createWithContent(convertFromRaw(JSON.parse(note?.content))))
+  }
+
+  const handleUpdateNote = async () => {
+    const editorContent = convertToRaw(editorState.getCurrentContent());
+    const title = editorContent.blocks[0].text; // setting first block as title
+    if(!title) return;
+    const content = JSON.stringify(editorContent);
+   
+    const timestamp = editMode?.timestamp;
+    const note_id = editMode?._id
+
+    if(!timestamp || !note_id) return;
+    try {
+      const { status } = await axios.put(`/note/${note_id}`, { title, content, timestamp }, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        toast.success('Note updated');
+        refetchNotes();
+        setEditMode(false);
+      }
+     } catch (error) {
+        console.log(error);
+     }
+  }
+
+  const handleDeleteNote = async (noteId) => {
+    try {
+      const { status } = await axios.delete(`/note/${noteId}`, {
+        headers: {
+          'x-auth-token': token
+        }, withCredentials: true
+      });
+      if(status == 200){
+        toast.success('Note deleted');
+        refetchNotes();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <div className="bg-gray-200 px-4 py-5 sm:px-6 ml-40 w-4/5 rounded-md">
-      <div className="flex space-x-3">
+    <div className="relative px-4 py-5 sm:px-6 ml-40 w-4/5 rounded-md">
+      {editMode && (
+        <div className="modal sticky top-1/2 px-10 z-50">
+          <div className="model-editor flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <RichTextEditor
+              editorState={editorState} 
+              setEditorState={setEditorState}
+            />
+            <div className="flex justify-end gap-4 mt-1">
+            <button onClick={handleUpdateNote} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2'>
+                    Update Note
+            </button>
+            <button onClick={() => setEditMode(false)} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 pinter-cursor'>
+                    Back
+            </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+
+      {data?.length < 1 && (<h1 className="text-lg">No notes created</h1>)}
+
+      {data?.map((note) => {
+
+        return (
+        <div key={note._id} className="bg-gray-200  p-4 flex space-x-3 mb-6">
         <div className="min-w-0 flex-1">
           <h1 className="text-lg font-medium text-gray-900">
-            <a href="#" className="hover:underline">
-              React Testing Playlist
-            </a>
+            <Link to={`/video/${note?.inVideo?._id}?playlist=${note?.inPlaylist?._id}`} className="hover:underline">
+              {note?.inVideo?.title || note?.title} - {convertSecToHMS(note?.timestamp)}
+            </Link>
           </h1>
           <p className="text-sm text-bg mt-2">
-            <a href="#" className="hover:underline">
-              August 25, 2022
-            </a>
+              {new Date(note?.createdAt).getDate()}/
+              {new Date(note?.createdAt).getMonth()}/
+              {new Date(note?.createdAt).getFullYear()}
           </p>
-          <p className="text-md text-bg mt-4 leading-6">
-            <a href="#" className="hover:underline">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Necessitatibus id, fugiat voluptas vero reprehenderit explicabo,
-              aliquam sint voluptatibus tenetur dolore excepturi? Repellendus,
-              at quas! Aliquid eos enim, iste, cum sunt dolorum reiciendis quam
-              explicabo eius aspernatur ea voluptates totam nam nostrum nemo
-              aliquam iure at illum mollitia cupiditate nihil incidunt vero.
-              Assumenda excepturi rem accusantium illo corrupti nisi eum, quo
-              mollitia harum dolorum ducimus quas sit fugit veniam totam
-              consequatur. Ipsa eius, excepturi ipsum aperiam cupiditate labore
-              fugiat at, necessitatibus porro beatae nam eligendi saepe sed
-              rerum officia esse, quos aliquam. Et ad laudantium aut
-              necessitatibus distinctio, iusto est sapiente.
-            </a>
-          </p>
+          <div className="mt-4 leading-6 readonly-editor">
+              <Editor 
+                editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(note.content)))} 
+                readOnly={true}
+              />
+          </div>
         </div>
         <div className="flex-shrink-0 self-top flex">
           <Menu as="div" className="relative z-30 inline-block text-left">
             <div>
-              <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
+              <Menu.Button onClick={() => setEditMode(false)} className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
                 <span className="sr-only">Open options</span>
                 <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
               </Menu.Button>
@@ -79,10 +151,9 @@ export default function Notes() {
             >
               <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
-                  <Menu.Item>
+                  <Menu.Item onClick={() => setupEditMode(note)}>
                     {({ active }) => (
-                      <a
-                        href="#"
+                      <div
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -95,13 +166,12 @@ export default function Notes() {
                           aria-hidden="true"
                         />
                         <span>Edit</span>
-                      </a>
+                      </div>
                     )}
                   </Menu.Item>
-                  <Menu.Item>
+                  <Menu.Item onClick={() => handleDeleteNote(note._id)}>
                     {({ active }) => (
-                      <a
-                        href="#"
+                      <div
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -114,7 +184,7 @@ export default function Notes() {
                           aria-hidden="true"
                         />
                         <span>Delete</span>
-                      </a>
+                      </div>
                     )}
                   </Menu.Item>
                 </div>
@@ -123,6 +193,8 @@ export default function Notes() {
           </Menu>
         </div>
       </div>
+        )
+      })}
     </div>
   );
 }

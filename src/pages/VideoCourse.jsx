@@ -37,7 +37,13 @@ const VideoCourse = () => {
     if(!timestamp) return;
     setNoteLoading(true);
      try {
-      const { data, status } = await axios.post('/note/create', {title, content, timestamp, noteFor: video._id }, {
+      const { status } = await axios.post('/note/create', { 
+        title, 
+        content, 
+        timestamp, 
+        inPlaylist: playlist, 
+        inVideo: video._id
+      }, {
         headers: {
           'x-auth-token': token
         }, withCredentials: true

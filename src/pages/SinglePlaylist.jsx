@@ -77,9 +77,8 @@ function SinglePlaylist() {
         {isLoading && <Loader />}
         {videos?.map((item, index) => {
           return (
-            <Link to={`/video/${item._id}?playlist=${playlist._id}`}>
+            <Link key={item._id} to={`/video/${item._id}?playlist=${playlist._id}`}>
               <Card
-                key={item._id}
                 style={{ backgroundColor: "#F6F7FF", marginBottom: "10px" }}
                 sx={{ width: 1125 }}
               >
