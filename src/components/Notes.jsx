@@ -115,7 +115,7 @@ export default function Notes({ data = [], refetchNotes = () => {} }) {
         <div key={note._id} className="bg-gray-200  p-4 flex space-x-3 mb-6">
         <div className="min-w-0 flex-1">
           <h1 className="text-lg font-medium text-gray-900">
-            <Link to={`/video/${note?.inVideo?._id}?playlist=${note?.inPlaylist?._id}`} className="hover:underline">
+            <Link to={note?.pageURL ? note?.pageURL  : `/video/${note?.inVideo?._id}?playlist=${note?.inPlaylist?._id}`} className="hover:underline">
               {note?.inVideo?.title || note?.title} - {convertSecToHMS(note?.timestamp)}
             </Link>
           </h1>

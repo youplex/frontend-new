@@ -15,6 +15,7 @@ export default function Scheduling() {
   const [description, setDescription] = useState(searchParams.get("description") || "");
   const [page, setPage] = useState(searchParams.get("page") || "");
   const [loading, setLoading] = useState(false);
+  const [isRecurring, setIsRecurring] = useState(false);
 
   const handleSchedule = async () => {
     const getISODate = (time) => new Date(time).toISOString();
@@ -33,13 +34,16 @@ export default function Scheduling() {
     try {
       let desc = description.trim();
       if(page) desc += `&page=${page}`;
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
       const { response, data, status } = await axios.post(
         "/event/create",
         {
           start,
           end,
+          timeZone,
           summary: summary.trim(),
           description: desc,
+          isRecurring,
         },
         {
           headers: {
@@ -105,9 +109,15 @@ export default function Scheduling() {
             <h2 className="font-medium">Select End Time</h2>
             <DateTime dateTime={endTime} setDateTime={setEndTime} />
           </div>
+          <div className="relative mt-6 flex flex-col items-start">
+            <label htmlFor="recur" className="font-medium" >Make it Recurring</label>
+            <div className="my-5 pl-4">
+              <input value={isRecurring} onChange={(e) => setIsRecurring(e.target.checked)} style={{ transform: 'scale(1.4)' }} type="checkbox" id="recur"  />
+            </div>
+          </div>
           
           {loading && (<div
-            className=" w-max h-max bg-primary py-1 px-2 ml-24 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
+            className=" w-max h-max bg-primary py-1 px-2 ml-3 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
           >
             Loading ...
           </div>)}
@@ -115,14 +125,14 @@ export default function Scheduling() {
           {(user?.calendarAccess && !loading) ?
           (<button
             onClick={handleSchedule}
-            className=" w-max h-max bg-primary py-1 px-2 ml-24 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
+            className=" w-max h-max bg-primary py-1 px-2 ml-3 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
           >
             Schedule
           </button> ):
           <>
           {!loading &&
           <div
-              className="mt-36 bg-blue-600 px-4 py-2 absolute top-80 rounded text-white focus:outline-none hover:bg-blue-700"
+              className=" w-max h-max bg-primary py-2 px-2 mt-12 rounded text-white focus:outline-none hover:bg-blue-700"
           >
             Calendar access is not granted, relogin
             </div>}

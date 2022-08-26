@@ -3,6 +3,7 @@ import { HiOutlineLightningBolt } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import google_logo  from '../assets/google_logo.svg'
 
 const LandingNav = ({ login }) => {
   const { token } = useSelector((state) => ({ ...state.auth }));
@@ -53,9 +54,14 @@ const LandingNav = ({ login }) => {
           ) : (
             <button
               onClick={() => login()}
-              className="hidden p-3 px-6 pt-2 text-white bg-btn rounded-lg baseline hover:bg-blue-700 md:block "
+              className="flex flex-row align-center hidden pt-2 pb-2 pr-5 pl-2 text-white baseline hover:bg-blue-600  md:block google-btn-bg"
             >
-              Login
+              <span className="inline-block bg-white mr-3">
+                <img src={google_logo} style={{ transform: 'scale(1.9)'}} className="h-6 inline-block" alt="" />
+              </span>
+              <span>
+                Sign in with Google
+              </span>
             </button>
           )}
           {/* Hamburger Icon */}

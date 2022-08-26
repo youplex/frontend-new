@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { VideoPlayer, Navbar, RichTextEditor } from '../components';
 import { useSelector } from 'react-redux';
-import { useSearchParams, useParams, Link} from 'react-router-dom';
+import { useSearchParams, useParams, Link, useLocation } from 'react-router-dom';
 import { useVideosQuery } from '../redux/services/playlistApi';
 import { useVideoNotesQuery } from '../redux/services/noteApi';
 import { EditorState, convertToRaw, convertFromRaw, Editor } from 'draft-js';
@@ -13,9 +13,10 @@ import { toast } from 'react-toastify';
 const VideoCourse = () => {
   const { token } = useSelector((state) => ({...state.auth}));
   const [ searchParams ] = useSearchParams();
+  const { pathname, search } = useLocation();
   const { videoId } = useParams();
   const playlist = searchParams.get('playlist');
-  const page = searchParams.get('page');
+  const page = searchParams.get('page') || 1;
   const playerRef = useRef();
   const { data: { videos = []} = {}, refetch: videoRefetch} = useVideosQuery({token, playlistId: playlist, page: +page});
   const { data: notes = [] , refetch: noteRefetch } = useVideoNotesQuery({ token, videoId });
@@ -36,12 +37,14 @@ const VideoCourse = () => {
    
     const timestamp = Math.floor(playerRef.current.getCurrentTime());
     if(!timestamp) return;
+    
     setNoteLoading(true);
      try {
       const { status } = await axios.post('/note/create', { 
         title, 
         content, 
-        timestamp, 
+        timestamp,
+        pageURL: pathname + search,
         inPlaylist: playlist, 
         inVideo: video._id
       }, {

@@ -18,12 +18,12 @@ class Faq extends React.Component {
       {
         label: "How to get customised notifications?",
         value:
-          "Add a summary, description and schedule an event in your Google calendar",
+          "Connect your gmail with youplex and get notifications about your schedule. ",
       },
       {
         label: "Are there any charges for this?",
         value:
-          "No, this is completely free!",
+          "It's free and always will be!",
       },
     ];
     return (

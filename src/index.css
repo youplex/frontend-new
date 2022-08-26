@@ -376,6 +376,9 @@ p {
   border: 1px solid rgb(198, 197, 202);
 }
 
+.google-btn-bg{
+  background: #4285F4;
+}
 
 @media screen and (max-width: 768px){
   .login-container{

@@ -98,7 +98,6 @@ function LandingFeatures() {
                 </h1>
                 <p className="max-w-sm text-darkGrayishBlue text-lg bg-text">
                   See which part of the topic you spent most of your time!
-                  Maintain learning streaks and share it with your friends.
                 </p>
               </div>
             </div>

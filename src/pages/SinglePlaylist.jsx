@@ -99,7 +99,7 @@ function SinglePlaylist() {
           nextLabel="next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
-          pageCount={Math.ceil(playlist?.totalVideos / itemsPerPage)}
+          pageCount={playlist?.totalVideos ? Math.ceil(playlist?.totalVideos / itemsPerPage) : 0}
           previousLabel="< previous"
           renderOnZeroPageCount={null}
           containerClassName={"pagination"}
@@ -141,7 +141,7 @@ function SinglePlaylist() {
           nextLabel="next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
-          pageCount={Math.ceil(playlist?.totalVideos / itemsPerPage)}
+          pageCount={Math.ceil(playlist?.totalVideos / itemsPerPage) || 0}
           previousLabel="< previous"
           renderOnZeroPageCount={null}
           containerClassName={"pagination"}
