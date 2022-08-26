@@ -15,8 +15,9 @@ const VideoCourse = () => {
   const [ searchParams ] = useSearchParams();
   const { videoId } = useParams();
   const playlist = searchParams.get('playlist');
+  const page = searchParams.get('page');
   const playerRef = useRef();
-  const { data: { videos = []} = {}, refetch: videoRefetch} = useVideosQuery({token, playlistId: playlist});
+  const { data: { videos = []} = {}, refetch: videoRefetch} = useVideosQuery({token, playlistId: playlist, page: +page});
   const { data: notes = [] , refetch: noteRefetch } = useVideoNotesQuery({ token, videoId });
 
   const videoIndex = videos.findIndex(vid => vid._id === videoId);
@@ -152,7 +153,7 @@ const VideoCourse = () => {
         
         <div >
           <Link to={`/playlist/${playlist}`}>
-            <div className=" absolute top-4 left-24  max-h-full ">
+          <div className="absolute top-4 left-24 max-h-full rounded-full hover:bg-gray-300 p-2">
               <HiArrowNarrowLeft  size={28}/>
             </div>
           </Link>
@@ -216,7 +217,7 @@ const VideoCourse = () => {
               <>
               {noteLoading ? (
                 <div className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
-                  Loading ...
+                  Updating ...
                 </div>
               ) : (
                 <button type='button' onClick={handleUpdate} className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
@@ -233,7 +234,7 @@ const VideoCourse = () => {
               <>
               {noteLoading? (
                 <div className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
-                  Loading ...
+                  Saving ...
                 </div>
               ) : (
               <button className='bg-primary text-white h-max py-1 px-4 rounded-lg mt-2 ml-auto'>
@@ -251,7 +252,7 @@ const VideoCourse = () => {
         <div className="flex mx-24 mt-2">
           <div className="bg-primary text-white h-max px-4 py-1 text-md rounded-md">
               <Link 
-              to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}`}
+              to={`/schedule?summary=${video?.title}&description=Watch%20Video%20Link:%20${window.location.href}&page=${page}`}
               >Schedule</Link>
           </div>
           <button onClick={() => setReadOnly(true)} className={`bg-primary text-white h-max px-4 py-1 text-md rounded-md ml-16`}>
@@ -279,7 +280,12 @@ const VideoCourse = () => {
                 video?.description
               :
                 video?.description?.length > 240 ? `${video?.description.substring(0, 239)}...` : video?.description 
-              } <button onClick={() => setReadMore(prev => !prev)} className='text-blue-500'>Read {isReadMore ? 'Less' : 'More'}</button>
+              } 
+              { video?.description?.length > 240  && (
+                <button onClick={() => setReadMore(prev => !prev)} className='text-blue-500'>
+                Read {isReadMore ? 'Less' : 'More'}
+                </button>)
+              }
             </p>
           </div>
         </div>

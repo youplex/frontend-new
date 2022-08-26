@@ -12,11 +12,13 @@ const LandingNav = ({ login }) => {
   const redirect = URLParams.get('redirectedFrom') || '';
   // fix - 
   const description = URLParams.get('description') || '';
+  const page = URLParams.get('page') || '';
 
   useEffect(() => {
     if(token && (pathname === '/' && redirect)){
       let navigateURL = redirect;
       if(description && redirect) navigateURL += `&description=${description}`;
+      if(page && redirect) navigateURL += `&page=${page}`;
       // fix - 
       navigate(navigateURL || '/dashboard');
     }

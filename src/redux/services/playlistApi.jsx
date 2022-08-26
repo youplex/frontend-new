@@ -16,8 +16,8 @@ export const playlistApi = createApi({
             keepUnusedDataFor: 5
         }),
         videos: builder.query({
-            query: ({token, playlistId}) => ({
-                url: `/playlist/videos?id=${playlistId}`,
+            query: ({ token, playlistId, page = 1 }) => ({
+                url: `/playlist/videos?id=${playlistId}&page=${page}`,
                 headers: {
                     'x-auth-token': token
                 }

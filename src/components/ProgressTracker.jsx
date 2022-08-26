@@ -29,6 +29,7 @@ function ProgressTracker({ playlistData, isLoading, error }) {
             <Card
               sx={{ marginBottom: 0 }}
               key={item._id}
+              playlistId={item._id}
               title={item.title}
               videosCount={item.totalVideos}
               index={index}

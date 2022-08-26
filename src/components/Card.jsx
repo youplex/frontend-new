@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
-const Card = ({ title, videosCount, completed = 10, index = 1 }) => {
+const Card = ({ title, videosCount, completed = 10, index = 1, playlistId }) => {
   let timer; // safe from closure
   const cardColors = [
     { bg: "#f3f1ff", completed: "#432fb3" },
@@ -10,6 +11,7 @@ const Card = ({ title, videosCount, completed = 10, index = 1 }) => {
   ];
   const progressEndValue = Math.floor((completed / videosCount) * 100);
   const [progressValue, setProgressValue] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     clearInterval(timer);
@@ -24,9 +26,9 @@ const Card = ({ title, videosCount, completed = 10, index = 1 }) => {
   }, [progressValue]);
 
   return (
-    <>
       <div
-        className="card-container"
+        onClick={() => navigate(`/playlist/${playlistId}`)}
+        className="card-container cursor-pointer"
         style={{ backgroundColor: cardColors[index].bg }}
       >
         <div
@@ -46,7 +48,6 @@ const Card = ({ title, videosCount, completed = 10, index = 1 }) => {
           <p>Videos: {videosCount}</p>
         </div>
       </div>
-    </>
   );
 };
 

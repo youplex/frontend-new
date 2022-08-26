@@ -13,6 +13,7 @@ export default function Scheduling() {
   const [endTime, setEndTime] = useState(new Date());
   const [summary, setSummary] = useState(searchParams.get("summary") || "");
   const [description, setDescription] = useState(searchParams.get("description") || "");
+  const [page, setPage] = useState(searchParams.get("page") || "");
   const [loading, setLoading] = useState(false);
 
   const handleSchedule = async () => {
@@ -30,13 +31,15 @@ export default function Scheduling() {
     }
     setLoading(true);
     try {
+      let desc = description.trim();
+      if(page) desc += `&page=${page}`;
       const { response, data, status } = await axios.post(
         "/event/create",
         {
           start,
           end,
           summary: summary.trim(),
-          description: description.trim(),
+          description: desc,
         },
         {
           headers: {
@@ -83,7 +86,7 @@ export default function Scheduling() {
             </label>{" "}
             <br />
             <textarea
-              value={description || ''}
+              value={page ? `${description}&page=${page}` : description ? description : ''}
               onChange={(e) => setDescription(e.target.value)}
               className="w-9/12 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 mt-2 leading-8 transition-colors duration-200 ease-in-out"
               name=""
