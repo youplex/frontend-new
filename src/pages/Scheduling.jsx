@@ -111,7 +111,7 @@ export default function Scheduling() {
           </div>
           <div className="relative mt-6 flex flex-col items-start">
             <label htmlFor="recur" className="font-medium" >Make it Recurring</label>
-            <div className="my-5 pl-4">
+            <div className="my-5 pl-1">
               <input value={isRecurring} onChange={(e) => setIsRecurring(e.target.checked)} style={{ transform: 'scale(1.4)' }} type="checkbox" id="recur"  />
             </div>
           </div>

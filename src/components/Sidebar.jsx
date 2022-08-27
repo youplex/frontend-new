@@ -4,9 +4,14 @@ import { SidebarData } from "../data";
 import { HiOutlinePlusCircle } from "react-icons/hi";
 // import * as NoteIcon from "react-icons/fa";
 import { IconContext } from "react-icons";
+import { useLocation } from "react-router-dom";
 // import './sidebar.css';
 
 function Sidebar() {
+  const { pathname } = useLocation();
+  const LINKS = ['/dashboard', '/schedule', '/notes'];
+  const currentLinkIndex = LINKS.findIndex(link => link === pathname);
+
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -14,12 +19,13 @@ function Sidebar() {
           <ul className="sidebar-menu-items ">
             {SidebarData.map((item, index) => {
               return (
-
                 <li
                   key={index}
-                  className=" h-max w-max p-3 mt-5 rounded-full hover-class cursor-pointer  "
+                  className={`h-max w-max p-3 mt-5 rounded-full hover-class cursor-pointer ${(currentLinkIndex + 1) === index ? 'active': ""} `}
                 >
-                  <NavLink to={item.path}>
+                  <NavLink to={item.path} 
+                    className={({ isActive }) => (isActive ? 'active' : 'inactive')}  
+                  >
                     <IconContext.Provider value={{}}>
                       {item.icon}
                     </IconContext.Provider>
